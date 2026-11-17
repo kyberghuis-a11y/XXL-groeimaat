@@ -2,12 +2,15 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from './auth/AuthContext';
 import { AppShell, TabLayout } from './components/Layout';
 import { ScrollToTop } from './components/ScrollToTop';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Privacy, SignIn } from './pages/Account';
 import { CatalogStateProvider } from './lib/catalogState';
 import { Discover } from './pages/Discover';
 import { Onboarding } from './pages/Onboarding';
 import { ProductDetail } from './pages/ProductDetail';
-import { Home, Profile } from './pages/Tabs';
+import { Home } from './pages/Tabs';
+import { Profile } from './pages/ProfilePage';
+import { EditAnswer } from './pages/EditAnswer';
 import { OrdersPage } from './pages/Orders';
 import { CartPage, CheckoutPage } from './pages/Cart';
 import { Welcome } from './pages/Welcome';
@@ -20,6 +23,7 @@ import { OrdersProvider } from './orders/OrdersContext';
 
 export default function App() {
   return (
+    <ErrorBoundary>
     <BrowserRouter>
       <ScrollToTop />
       <AuthProvider>
@@ -37,6 +41,7 @@ export default function App() {
             <Route path="/onboarding/:step" element={<Onboarding />} />
             <Route path="/inloggen" element={<SignIn />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/profiel/aanpassen/:key" element={<RequireAuth><EditAnswer /></RequireAuth>} />
             <Route element={<TabLayout />}>
               {/* Ontdek en productdetail zijn ook zonder account te bekijken. */}
               <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
@@ -57,5 +62,6 @@ export default function App() {
       </ProfileProvider>
       </AuthProvider>
     </BrowserRouter>
+    </ErrorBoundary>
   );
 }

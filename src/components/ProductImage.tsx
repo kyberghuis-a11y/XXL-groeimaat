@@ -15,8 +15,8 @@ export function ProductImage({ product, className = '' }: { product: ProductLine
         role="img"
         aria-label={`${product.name}, XXL Nutrition (foto volgt)`}
       >
-        <span className="text-xs font-extrabold tracking-wider text-xxl-black/60 uppercase">{product.category}</span>
-        <span className="text-[10px] text-xxl-black/40">Foto volgt</span>
+        <span className="text-xs font-extrabold tracking-wider text-xxl-black/70 uppercase">{product.category}</span>
+        <span className="text-[10px] text-xxl-black/70">Foto volgt</span>
       </div>
     );
   }

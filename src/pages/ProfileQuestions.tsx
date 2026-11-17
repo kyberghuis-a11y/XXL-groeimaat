@@ -12,7 +12,7 @@ export function ProfileQuestions() {
   const location = useLocation();
 
   if (!authLoading && !user) return <Navigate to="/inloggen" replace state={{ from: location.pathname }} />;
-  if (authLoading || loading) return <p className="p-6 text-center text-sm text-xxl-black/60">Even laden…</p>;
+  if (authLoading || loading) return <p className="p-6 text-center text-sm text-xxl-black/70">Even laden…</p>;
 
   return (
     <QuestionFlow

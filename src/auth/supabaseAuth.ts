@@ -71,6 +71,16 @@ export function createSupabaseAuth(client: SupabaseClient): AuthService {
       await client.auth.signOut();
     },
 
+    async updateName(name) {
+      const { data } = await client.auth.getSession();
+      const authUser = data.session?.user;
+      if (!authUser) throw new AuthError('Je bent niet ingelogd.');
+      const { error } = await client.from('users').update({ name: name.trim() }).eq('id', authUser.id);
+      if (error) throw new AuthError('Je naam kon niet worden opgeslagen. Probeer het opnieuw.');
+      await client.auth.updateUser({ data: { name: name.trim() } }); // ook in de inloggegevens, voor de volledigheid
+      return loadUser(authUser);
+    },
+
     async deleteAccount() {
       const { error } = await client.rpc('delete_user');
       if (error) throw new AuthError('Je account kon niet verwijderd worden. Probeer het later opnieuw.');

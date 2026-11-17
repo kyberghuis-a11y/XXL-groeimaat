@@ -74,6 +74,14 @@ export function createDemoAuth(
     async signOut() {
       setSession(null);
     },
+    async updateName(name) {
+      const user = current();
+      if (!user) throw new AuthError('Je bent niet ingelogd.');
+      const updated = { ...user, name: name.trim() };
+      saveUsers(users().map((u) => (u.id === user.id ? updated : u)));
+      setSession(updated);
+      return updated;
+    },
     async deleteAccount() {
       const user = current();
       if (!user) return;

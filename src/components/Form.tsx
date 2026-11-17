@@ -44,12 +44,12 @@ export function TextField({ label, value, onChange, error, hint, type = 'text', 
         )}
       </div>
       {hint && !error && (
-        <p id={`${id}-hint`} className="mt-1 text-xs text-xxl-black/60">
+        <p id={`${id}-hint`} className="mt-1 text-xs text-xxl-black/70">
           {hint}
         </p>
       )}
       {error && (
-        <p id={`${id}-error`} className="mt-1 text-sm font-semibold text-xxl-red">
+        <p id={`${id}-error`} className="mt-1 border-l-4 border-xxl-red pl-2 text-sm font-semibold text-xxl-black">
           {error}
         </p>
       )}

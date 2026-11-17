@@ -182,3 +182,39 @@ describe('Supabase-koppeling', () => {
     expect(auth.signOut).not.toHaveBeenCalled();
   });
 });
+
+describe('naam wijzigen (bouwstap 8)', () => {
+  it('validatie', async () => {
+    const { validateName } = await import('./validation');
+    expect(validateName('  ')).toBe('Vul je naam in.');
+    expect(validateName('a'.repeat(61))).toMatch(/60/);
+    expect(validateName(' Samira ')).toBeUndefined();
+  });
+
+  it('demo: naam aanpassen, ingelogd blijven, melding naar luisteraars', async () => {
+    const auth = createDemoAuth(memoryStorage());
+    await auth.signUp({ name: 'Sam', email: 'sam@test.nl', password: '12345678' });
+    const seen: string[] = [];
+    auth.onChange((u) => u && seen.push(u.name));
+    const updated = await auth.updateName('  Samira ');
+    expect(updated.name).toBe('Samira');
+    expect((await auth.getCurrentUser())?.name).toBe('Samira');
+    expect(seen).toEqual(['Samira']);
+    await auth.signOut();
+    await expect(auth.updateName('X')).rejects.toThrow(/niet ingelogd/);
+  });
+
+  it('Supabase: naam in users én in de inloggegevens', async () => {
+    const update = vi.fn().mockReturnValue({ eq: vi.fn().mockResolvedValue({ error: null }) });
+    const updateUser = vi.fn().mockResolvedValue({ error: null });
+    const row = { id: 'u1', email: 'sam@test.nl', name: 'Samira', is_adult: true, created_at: 'x' };
+    const client = {
+      auth: { getSession: vi.fn().mockResolvedValue({ data: { session: { user: AUTH_USER } } }), updateUser },
+      from: () => ({ update, select: () => ({ eq: () => ({ maybeSingle: () => Promise.resolve({ data: row }) }) }) }),
+    };
+    const user = await createSupabaseAuth(client as unknown as SupabaseClient).updateName(' Samira ');
+    expect(update).toHaveBeenCalledWith({ name: 'Samira' });
+    expect(updateUser).toHaveBeenCalledWith({ data: { name: 'Samira' } });
+    expect(user.name).toBe('Samira');
+  });
+});

@@ -36,7 +36,10 @@
 | Bestellingen (stap 7) | Winkelwagen alleen in de browser (`src/cart/`, localStorage `groeimaat.cart`, ook zonder account); afrekenen vraagt inloggen. Gesimuleerde checkout: betaalmethode kiezen, niets betaald of verzonden. Bestelling via `OrderService` (Supabase: `orders` + `order_items` via RPC `create_order`, alles of niets; demo: localStorage). Leverdatum in `src/orders/delivery.ts` (NL-tijd): vóór 22:00 op ma–vr = zelfde dag verzonden, bezorgd op de eerstvolgende dag ma–za. Status wordt nagebootst uit de tijd (`simulatedStatus`); opgeslagen status is 'besteld' |
 | Interpretaties bestellingen | *Niet letterlijk in de brief, ter controle:* verzendkosten onder €100 zijn onbekend en tellen niet mee ("nog te controleren"); geen feestdagen in de leverdatum; statustijden: in behandeling na 15 min, verzonden 20:00 op de verzenddag (of 1 uur na bestellen), onderweg 08:00 en bezorgd 14:00 op de bezorgdag; geen track & trace (geen echte vervoerder); bestelnummer "GM-JJMMDD-1234" (geen echt XXL-nummer); order_items slaan productnaam, smaak en formaat mee op (geen tabel product_variants in Supabase); onder 18 kan een product met cafeïne niet in de winkelwagen of door de checkout; "Opnieuw bestellen" en "Beoordeel deze smaak" zijn "later" in de brief en niet gebouwd |
 | Supabase-migraties | Na elke nieuwe migratie moet de gebruiker die handmatig draaien in de SQL Editor (zie `docs/supabase-setup.md`) |
-| Wachtwoord vergeten | Nog niet gebouwd (niet in de brief). Kandidaat voor bouwstap 8 |
+| Wachtwoord vergeten | Niet gebouwd (niet in de brief). Eerst met de gebruiker overleggen |
+| Profiel aanpassen (stap 8) | Profiel > Mijn voorkeuren: elke vraag apart aanpassen via `/profiel/aanpassen/:key` (`EditQuestion` in `QuestionFlow.tsx`, zonder voortgangsbalk; na opslaan terug met bevestiging). Smaaktest: één antwoord aanpassen of de hele test opnieuw (`/onboarding/3/1`, vorige antwoorden staan klaar, er wordt niets gewist). Naam wijzigen via `AuthService.updateName`. Het advies wordt nergens opgeslagen, dus is na elke wijziging direct opnieuw berekend |
+| Toegankelijkheid | Gecontroleerd met axe-core (WCAG 2.1 AA) op 15 schermen: 0 problemen. Regels: kleine rode tekst alleen op wit (contrast 4,8); op grijs (4,4) of zwart (3,6) gebruik je zwart of wit en rood als accent (streep, icoon, knop). Grijze tekst minstens `text-xxl-black/70`. Elke losse pagina heeft een `<main>`. Tikdoelen zijn minstens 44 px |
+| Online zetten | `vercel.json` en `public/_redirects` (Netlify) sturen elke route door naar `index.html`. Stappen in `docs/mobiel-testen.md` |
 
 ## Huisstijl
 - Kleuren zijn alleen Tailwind-tokens, gedefinieerd in `@theme` in `src/index.css`: `xxl-red`, `xxl-black`, `xxl-grey`, `xxl-white`. Gebruik nergens anders losse hexcodes.
@@ -67,4 +70,13 @@ Dit hoort niets op te leveren.
 - [x] Bouwstap 5: 7 smaakvragen, berekening smaakprofiel, scherm "Jouw smaakprofiel" met concrete XXL-smaken en beginnerstips. *Supabase-opslag getest met een nagebootste client.*
 - [x] Bouwstap 6: aanbevelingsalgoritme (stap A + B), advies op Home per categorie met labels, uitleg en match-%, match-% in Ontdek en op de productpagina, "Past niet bij jou" met reden. Geen nieuwe Supabase-tabel nodig
 - [x] Bouwstap 7: winkelwagen, gesimuleerde checkout, bestellingen (lopend met statusbalk en verwachte levering, eerder besteld, uitgegeven deze maand t.o.v. budget). *Supabase-opslag getest met een nagebootste client.*
-- [ ] Bouwstap 8: profiel bewerken, herberekenen, afwerking, testen op mobiel
+- [x] Bouwstap 8: antwoorden en smaaktest aanpassen (advies direct herberekend), naam wijzigen, vangnet tegen een wit scherm, toegankelijkheid (0 axe-problemen), opschonen (0 lint-waarschuwingen), klaar voor Vercel/Netlify, getest op 4 nagebootste telefoons (320–430 px). Testen op een echte telefoon: `docs/mobiel-testen.md`
+
+## Open punten (voor de gebruiker)
+- Productdata controleren op xxlnutrition.com: zie `docs/productdata.md` (onder andere Green Protein, Cal & Mag en de volledige smakenlijsten)
+- Productfoto's opslaan: `public/images/products/README.md`
+- Verzendkosten onder €100 opzoeken (nu "nog te controleren")
+- Het echte XXL-lettertype opzoeken (nu tijdelijk Montserrat)
+- Interpretaties bij smaaktest, advies en bestellingen bevestigen (zie Besluiten)
+- Supabase-modus testen met het echte project; migraties 0001–0004 draaien
+- Testen op een echte telefoon (`docs/mobiel-testen.md`)

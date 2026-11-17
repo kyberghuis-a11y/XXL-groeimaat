@@ -2,20 +2,17 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { BackIcon } from '../components/Icons';
 import { QuestionFlow } from '../components/QuestionFlow';
-import { getProductLine, getProductLines } from '../data/catalog';
-import { isAllowed, type HardRuleInput } from '../recommend/rules';
-import type { FlavorFamily } from '../data/types';
 import { DISCLAIMER, FLAVOR_FAMILY_LABELS } from '../lib/format';
 import { optionLabel } from '../lib/questionFlow';
 import { useProfile } from '../profile/ProfileContext';
 import { isProfileComplete } from '../profile/questions';
 import { TASTE_QUESTIONS, type TasteAnswers } from '../taste/questions';
-import { suggestFlavors, suggestionSentence, type FlavorSuggestion } from '../taste/suggestions';
 import { useTaste } from '../taste/TasteContext';
-import { MAX_SCORE, personaTitle, rankFamilies, type TasteProfile } from '../taste/tasteProfile';
+import { beginnerTips, startAdvice, useFamilySuggestions } from '../taste/advice';
+import { MAX_SCORE, personaTitle, rankFamilies } from '../taste/tasteProfile';
 import { ProgressBar, STEPS } from './Onboarding';
 
-const Loading = () => <p className="p-6 text-center text-sm text-xxl-black/60">Even laden…</p>;
+const Loading = () => <p className="p-6 text-center text-sm text-xxl-black/70">Even laden…</p>;
 
 /** Bewaakt de volgorde: eerst account, dan profielvragen, dan smaaktest. */
 function useOnboardingGuard(): React.ReactElement | null {
@@ -48,25 +45,6 @@ export function TasteQuestions() {
   );
 }
 
-/** Concrete XXL-smaken per familie, rekening houdend met de harde regels (dieet, 18+). */
-export function useFamilySuggestions(profile: TasteProfile | null): Record<FlavorFamily, FlavorSuggestion[]> | null {
-  const { answers } = useProfile();
-  if (!profile) return null;
-  const lines = getProductLines();
-  return Object.fromEntries(
-    rankFamilies(profile.scores).map((f) => [f, suggestFlavors(f, profile, answers, lines)]),
-  ) as Record<FlavorFamily, FlavorSuggestion[]>;
-}
-
-/** "Begin met …": de beste smaak uit je nummer 1 en nummer 2 familie. */
-export function startAdvice(profile: TasteProfile, suggestions: Record<FlavorFamily, FlavorSuggestion[]>): string | null {
-  const [first, second] = profile.top_families;
-  const picks = [suggestions[first]?.[0], (second && suggestions[second]?.[0]) || suggestions[first]?.[1]].filter(
-    (x): x is FlavorSuggestion => Boolean(x),
-  );
-  return suggestionSentence(picks);
-}
-
 function ScoreBar({ score }: { score: number }) {
   return (
     <div className="flex items-center gap-2">
@@ -87,23 +65,6 @@ function ScoreBar({ score }: { score: number }) {
   );
 }
 
-/** Tips uit de brief; producten worden alleen genoemd als ze bij jouw voeding en leeftijd passen. */
-export function beginnerTips(mixWith: TasteProfile['mix_with'], rules: HardRuleInput): string[] {
-  const allowed = (id: string) => {
-    const line = getProductLine(id);
-    return Boolean(line && isAllowed(line, rules));
-  };
-  const tips = [
-    allowed('whey-delicious')
-      ? 'Twijfel je? Begin met het kleinste formaat (bijvoorbeeld Whey Delicious 450 g) of met samples.'
-      : 'Twijfel je? Begin met het kleinste formaat of met samples.',
-    'Chocolade en vanille zijn de veiligste smaken om mee te beginnen.',
-  ];
-  if (mixWith === 'water' && allowed('clear-whey-isolate'))
-    tips.push('Drink je je shake met water? Dan vind je Clear Whey vaak lekkerder dan een romige whey.');
-  return tips;
-}
-
 /** Onboarding stap 4: jouw smaakprofiel. */
 export function TasteResult() {
   const guard = useOnboardingGuard();
@@ -118,12 +79,12 @@ export function TasteResult() {
   const tips = beginnerTips(profile.mix_with, profileAnswers);
 
   return (
-    <div className="flex min-h-dvh flex-col bg-xxl-grey px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+    <main className="flex min-h-dvh flex-col bg-xxl-grey px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
       <ProgressBar step={4} total={STEPS.length} />
 
       <div className="flex-1 space-y-5 py-8">
         <div>
-          <p className="text-xs font-extrabold tracking-wider text-xxl-red uppercase">Jouw smaakprofiel</p>
+          <p className="text-xs font-extrabold tracking-wider text-xxl-black uppercase">Jouw smaakprofiel</p>
           <h1 className="mt-1 text-2xl leading-tight font-black">{personaTitle(profile)}</h1>
           {advice && (
             <p className="mt-2 text-base">
@@ -156,7 +117,7 @@ export function TasteResult() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-2 text-sm text-xxl-black/60">Nog geen XXL-smaak in deze familie die bij jouw voeding past.</p>
+                  <p className="mt-2 text-sm text-xxl-black/70">Nog geen XXL-smaak in deze familie die bij jouw voeding past.</p>
                 )}
               </li>
             ))}
@@ -194,7 +155,7 @@ export function TasteResult() {
           </ul>
         </section>
 
-        <p className="text-xs leading-relaxed text-xxl-black/60">{DISCLAIMER}</p>
+        <p className="text-xs leading-relaxed text-xxl-black/70">{DISCLAIMER}</p>
       </div>
 
       <div className="grid grid-cols-[auto_1fr] gap-3">
@@ -206,6 +167,6 @@ export function TasteResult() {
           Naar mijn advies
         </Link>
       </div>
-    </div>
+    </main>
   );
 }

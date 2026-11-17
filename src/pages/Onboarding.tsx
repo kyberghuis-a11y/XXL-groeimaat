@@ -73,7 +73,7 @@ export function Onboarding() {
   const isAccountStep = step === 1;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-xxl-grey px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+    <main className="flex min-h-dvh flex-col bg-xxl-grey px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
       <ProgressBar step={step} total={STEPS.length} />
 
       <div className="flex-1 py-8">
@@ -97,7 +97,7 @@ export function Onboarding() {
             </div>
           </>
         )}
-        {isAccountStep && <p className="mt-6 text-xs leading-relaxed text-xxl-black/60">{DISCLAIMER}</p>}
+        {isAccountStep && <p className="mt-6 text-xs leading-relaxed text-xxl-black/70">{DISCLAIMER}</p>}
       </div>
 
       {/* Bij stap 1 zonder account is "Account aanmaken" de volgende-knop. */}
@@ -123,6 +123,6 @@ export function Onboarding() {
         </Link>
       </div>
       )}
-    </div>
+    </main>
   );
 }

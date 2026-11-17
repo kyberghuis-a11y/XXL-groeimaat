@@ -17,6 +17,9 @@ npm test        # logica + validatie van de productdata
 npm run build   # typecheck + productiebuild
 ```
 
+## Online zetten en testen op je telefoon
+Zie `docs/mobiel-testen.md`: daar staan de stappen voor Vercel (aanbevolen) of je eigen wifi, het installeren als app en een testchecklist.
+
 ## Belangrijke bestanden
 - `docs/projectbrief.pdf`: de bron van waarheid
 - `docs/productdata.md`: onderzochte productgegevens (17-11-2026)
@@ -24,3 +27,5 @@ npm run build   # typecheck + productiebuild
 - `src/index.css`: huisstijl-tokens (kleuren + font)
 - `public/images/products/README.md`: welke productfoto's je nog moet opslaan
 - `CLAUDE.md`: werkafspraken en besluiten voor het bouwen met Claude
+- `docs/supabase-setup.md`: Supabase koppelen en de database klaarzetten
+- `supabase/migrations/`: de database-instructies (in volgorde draaien)

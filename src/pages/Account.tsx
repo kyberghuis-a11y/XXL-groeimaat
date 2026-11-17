@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { AuthError } from '../auth/types';
-import { PASSWORD_MIN_LENGTH, hasErrors, translateAuthError, validateSignIn, validateSignUp, type FieldErrors, type SignUpInput } from '../auth/validation';
+import { PASSWORD_MIN_LENGTH, hasErrors, translateAuthError, validateName, validateSignIn, validateSignUp, type FieldErrors, type SignUpInput } from '../auth/validation';
 import { DemoNotice, FormError, PrimaryButton, TextField } from '../components/Form';
 import { BackIcon } from '../components/Icons';
 import { Logo } from '../components/Layout';
@@ -54,7 +54,7 @@ export function SignUpForm({ onDone }: { onDone: () => void }) {
         <p className="mt-2 text-sm">
           We hebben een bevestigingslink gestuurd naar <strong>{confirmEmail}</strong>. Klik op de link en je gaat vanzelf verder met de vragen.
         </p>
-        <p className="mt-2 text-xs text-xxl-black/60">Niets ontvangen? Kijk ook in je spammap.</p>
+        <p className="mt-2 text-xs text-xxl-black/70">Niets ontvangen? Kijk ook in je spammap.</p>
       </div>
     );
   }
@@ -77,7 +77,7 @@ export function SignUpForm({ onDone }: { onDone: () => void }) {
       <PrimaryButton type="submit" loading={loading}>
         Account aanmaken
       </PrimaryButton>
-      <p className="text-xs leading-relaxed text-xxl-black/60">
+      <p className="text-xs leading-relaxed text-xxl-black/70">
         Door een account aan te maken ga je akkoord met de{' '}
         <Link to="/privacy" className="font-bold underline">
           privacyverklaring
@@ -86,7 +86,7 @@ export function SignUpForm({ onDone }: { onDone: () => void }) {
       </p>
       <p className="text-center text-sm">
         Heb je al een account?{' '}
-        <Link to="/inloggen" className="font-bold text-xxl-red underline underline-offset-4">
+        <Link to="/inloggen" className="font-bold underline decoration-xxl-red decoration-2 underline-offset-4">
           Log in
         </Link>
       </p>
@@ -124,7 +124,7 @@ export function SignIn() {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col bg-xxl-grey px-4 pt-4 pb-8">
+    <main className="flex min-h-dvh flex-col bg-xxl-grey px-4 pt-4 pb-8">
       <Link to="/" className="flex min-h-11 items-center gap-1 self-start text-sm font-bold uppercase" aria-label="Terug naar welkom">
         <BackIcon size={18} /> Terug
       </Link>
@@ -159,11 +159,46 @@ export function SignIn() {
       </form>
       <p className="mt-6 text-center text-sm">
         Nog geen account?{' '}
-        <Link to="/onboarding/1" className="font-bold text-xxl-red underline underline-offset-4">
+        <Link to="/onboarding/1" className="font-bold underline decoration-xxl-red decoration-2 underline-offset-4">
           Start hier
         </Link>
       </p>
-    </div>
+    </main>
+  );
+}
+
+function NameForm({ initial, onDone }: { initial: string; onDone: () => void }) {
+  const { service, applyUser } = useAuth();
+  const [name, setName] = useState(initial);
+  const [error, setError] = useState<string | undefined>();
+  const [busy, setBusy] = useState(false);
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    const invalid = validateName(name);
+    if (invalid) return setError(invalid);
+    setBusy(true);
+    try {
+      applyUser(await service.updateName(name));
+      onDone();
+    } catch (err) {
+      setError(messageOf(err));
+      setBusy(false);
+    }
+  }
+
+  return (
+    <form onSubmit={submit} noValidate className="mt-3 space-y-3 rounded-md bg-xxl-grey p-3">
+      <TextField label="Nieuwe naam" value={name} onChange={setName} error={error} autoComplete="given-name" maxLength={60} autoFocus />
+      <div className="grid grid-cols-2 gap-2">
+        <button type="button" onClick={onDone} className="min-h-12 rounded-md border-2 border-xxl-black text-sm font-extrabold uppercase">
+          Annuleren
+        </button>
+        <button type="submit" disabled={busy} className="min-h-12 rounded-md bg-xxl-red text-sm font-extrabold text-xxl-white uppercase disabled:opacity-60">
+          {busy ? 'Bezig…' : 'Opslaan'}
+        </button>
+      </div>
+    </form>
   );
 }
 
@@ -172,6 +207,7 @@ export function AccountSection() {
   const { service, user, applyUser } = useAuth();
   const navigate = useNavigate();
   const [confirming, setConfirming] = useState(false);
+  const [editingName, setEditingName] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -202,13 +238,21 @@ export function AccountSection() {
       <h2 id="account-title" className="text-base font-extrabold uppercase">
         Account & privacy
       </h2>
-      <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+      <dl className="mt-3 grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-1 text-sm">
         <dt className="font-semibold">Naam</dt>
-        <dd className="break-words">{user.name}</dd>
+        <dd className="flex min-w-0 items-center justify-between gap-2">
+          <span className="break-words">{user.name}</span>
+          {!editingName && (
+            <button type="button" onClick={() => setEditingName(true)} className="min-h-11 shrink-0 text-xs font-extrabold text-xxl-red uppercase underline underline-offset-2">
+              Wijzig
+            </button>
+          )}
+        </dd>
         <dt className="font-semibold">E-mail</dt>
         <dd className="break-all">{user.email}</dd>
       </dl>
-      {service.mode === 'demo' && <p className="mt-3 text-xs text-xxl-black/60">Demo-account: staat alleen in deze browser.</p>}
+      {editingName && <NameForm initial={user.name} onDone={() => setEditingName(false)} />}
+      {service.mode === 'demo' && <p className="mt-3 text-xs text-xxl-black/70">Demo-account: staat alleen in deze browser.</p>}
 
       <div className="mt-4 space-y-2">
         <button type="button" onClick={logout} disabled={busy} className="min-h-12 w-full rounded-md border-2 border-xxl-black text-sm font-extrabold uppercase">
@@ -248,12 +292,12 @@ export function AccountSection() {
 export function Privacy() {
   const navigate = useNavigate();
   return (
-    <div className="min-h-dvh bg-xxl-white px-4 pt-4 pb-10">
+    <main className="min-h-dvh bg-xxl-white px-4 pt-4 pb-10">
       <button type="button" onClick={() => navigate(-1)} className="flex min-h-11 items-center gap-1 text-sm font-bold uppercase">
         <BackIcon size={18} /> Terug
       </button>
       <h1 className="mt-4 text-2xl font-black uppercase">Privacyverklaring</h1>
-      <p className="mt-1 text-xs font-bold text-xxl-black/60 uppercase">{CONCEPT_LABEL}</p>
+      <p className="mt-1 text-xs font-bold text-xxl-black/70 uppercase">{CONCEPT_LABEL}</p>
       <div className="mt-6 space-y-5 text-sm leading-relaxed">
         <section>
           <h2 className="font-extrabold uppercase">Welke gegevens vragen we?</h2>
@@ -285,6 +329,6 @@ export function Privacy() {
           <p className="mt-2 text-xxl-black/70">{DISCLAIMER}</p>
         </section>
       </div>
-    </div>
+    </main>
   );
 }

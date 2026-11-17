@@ -3,10 +3,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CheckIcon, TruckIcon } from '../components/Icons';
 import { PageTitle } from '../components/Layout';
 import { formatEuro } from '../lib/format';
-import { amsterdamParts, formatDate, formatDayLong, relativeDay } from '../orders/delivery';
+import { formatDate, formatDayLong, relativeDay } from '../orders/delivery';
 import { useOrders } from '../orders/OrdersContext';
 import { STATUS_LABEL, STATUS_STEPS, isOngoing, simulatedStatus, type Order, type OrderStatus } from '../orders/types';
 import { useProfile } from '../profile/ProfileContext';
+import { spentThisMonth } from '../orders/spending';
 import type { BudgetRange } from '../profile/types';
 
 /** Huidige tijd, elke minuut bijgewerkt (de status is nagebootst en verandert met de tijd). */
@@ -22,15 +23,6 @@ function useNow(): Date {
 const BUDGET_MAX: Record<BudgetRange, number | null> = { under_20: 20, '20_40': 40, '40_60': 60, over_60: null };
 const BUDGET_TEXT: Record<BudgetRange, string> = { under_20: 'tot €20', '20_40': '€20–€40', '40_60': '€40–€60', over_60: 'meer dan €60' };
 
-/** Totaal uitgegeven in de huidige maand (Nederlandse tijd), zonder geannuleerde en geretourneerde bestellingen. */
-export function spentThisMonth(orders: Order[], now: Date): number {
-  const month = amsterdamParts(now).date.slice(0, 7);
-  const total = orders
-    .filter((o) => o.status !== 'geannuleerd' && o.status !== 'retour' && amsterdamParts(new Date(o.ordered_at)).date.startsWith(month))
-    .reduce((sum, o) => sum + o.total_eur, 0);
-  return Math.round(total * 100) / 100;
-}
-
 function StatusBar({ status }: { status: OrderStatus }) {
   const current = STATUS_STEPS.findIndex((s) => s.status === status);
   return (
@@ -40,7 +32,7 @@ function StatusBar({ status }: { status: OrderStatus }) {
         return (
           <li key={step.status} className="flex flex-col items-center gap-1 text-center" aria-current={i === current ? 'step' : undefined}>
             <span className={`h-1.5 w-full rounded-full ${done ? 'bg-xxl-red' : 'bg-xxl-black/10'}`} aria-hidden="true" />
-            <span className={`text-[10px] leading-tight ${i === current ? 'font-extrabold' : done ? 'font-semibold' : 'text-xxl-black/50'}`}>{step.label}</span>
+            <span className={`text-[10px] leading-tight ${i === current ? 'font-extrabold' : done ? 'font-semibold' : 'text-xxl-black/70'}`}>{step.label}</span>
           </li>
         );
       })}
@@ -54,7 +46,7 @@ function ItemList({ order }: { order: Order }) {
       {order.items.map((i) => (
         <li key={i.variant_id}>
           {i.quantity}× {i.product_name}
-          <span className="text-xxl-black/60"> · {[i.flavor, i.size_label].filter(Boolean).join(' · ')}</span>
+          <span className="text-xxl-black/70"> · {[i.flavor, i.size_label].filter(Boolean).join(' · ')}</span>
         </li>
       ))}
     </ul>
@@ -65,7 +57,7 @@ function OngoingCard({ order, now }: { order: Order; now: Date }) {
   const status = simulatedStatus(order, now);
   return (
     <li className="space-y-3 rounded-lg bg-xxl-white p-4">
-      <div className="flex items-baseline justify-between gap-2 text-xs text-xxl-black/60">
+      <div className="flex items-baseline justify-between gap-2 text-xs text-xxl-black/70">
         <span className="font-bold text-xxl-black">{order.order_number}</span>
         <span>Besteld op {formatDate(new Date(order.ordered_at))}</span>
       </div>
@@ -75,7 +67,7 @@ function OngoingCard({ order, now }: { order: Order; now: Date }) {
       <StatusBar status={status} />
       <ItemList order={order} />
       <div className="flex items-center justify-between border-t border-xxl-black/10 pt-3 text-sm">
-        <span className="text-xxl-black/60">{order.tracking_url ? <a href={order.tracking_url}>Track & trace</a> : 'Track & trace: nog niet beschikbaar in deze demo'}</span>
+        <span className="text-xxl-black/70">{order.tracking_url ? <a href={order.tracking_url}>Track & trace</a> : 'Track & trace: nog niet beschikbaar in deze demo'}</span>
         <span className="font-extrabold">{formatEuro(order.total_eur)}</span>
       </div>
     </li>
@@ -89,7 +81,7 @@ function PastRow({ order, now }: { order: Order; now: Date }) {
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="font-bold">{formatDate(new Date(order.ordered_at))}</p>
-          <p className="text-xs text-xxl-black/60">{order.order_number}</p>
+          <p className="text-xs text-xxl-black/70">{order.order_number}</p>
         </div>
         <span
           className={`rounded-full px-2 py-0.5 text-[11px] font-extrabold uppercase ${status === 'bezorgd' ? 'bg-xxl-black text-xxl-white' : 'bg-xxl-grey text-xxl-black ring-1 ring-xxl-black/15'}`}
@@ -173,7 +165,7 @@ export function OrdersPage() {
         ))}
       </div>
 
-      {loading && <p className="text-center text-sm text-xxl-black/60">Even laden…</p>}
+      {loading && <p className="text-center text-sm text-xxl-black/70">Even laden…</p>}
       {error && <p className="rounded-md bg-xxl-white p-3 text-sm text-xxl-red">{error}</p>}
 
       {!loading && tab === 'lopend' && (
@@ -192,7 +184,7 @@ export function OrdersPage() {
               </Link>
             </div>
           )}
-          {ongoing.length > 0 && <p className="text-xs text-xxl-black/60">De status wordt in deze demo nagebootst; er is nog geen koppeling met de webshop van XXL Nutrition.</p>}
+          {ongoing.length > 0 && <p className="text-xs text-xxl-black/70">De status wordt in deze demo nagebootst; er is nog geen koppeling met de webshop van XXL Nutrition.</p>}
         </>
       )}
 

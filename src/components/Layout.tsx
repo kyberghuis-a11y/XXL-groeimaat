@@ -37,7 +37,7 @@ export function Header() {
   const cartCount = useCart().summary.count;
   return (
     <header className="flex items-center justify-between border-b border-xxl-black/10 bg-xxl-white px-4 py-3">
-      <NavLink to="/home" aria-label="Naar Home" className="text-lg text-xxl-black">
+      <NavLink to="/home" aria-label="Naar Home" className="flex min-h-11 items-center text-lg text-xxl-black">
         <Logo />
       </NavLink>
       <div className="flex items-center gap-1">
@@ -85,8 +85,8 @@ export function BottomNav() {
             <NavLink
               to={to}
               className={({ isActive }) =>
-                `flex min-h-14 flex-col items-center justify-center gap-0.5 text-[11px] font-bold tracking-wide uppercase ${
-                  isActive ? 'text-xxl-red' : 'text-xxl-white/70 hover:text-xxl-white'
+                `flex min-h-14 flex-col items-center justify-center gap-0.5 border-t-4 text-[11px] font-bold tracking-wide uppercase ${
+                  isActive ? 'border-xxl-red text-xxl-white [&>svg]:text-xxl-red' : 'border-transparent text-xxl-white/70 hover:text-xxl-white'
                 }`
               }
             >

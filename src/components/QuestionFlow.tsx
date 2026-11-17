@@ -1,5 +1,5 @@
-// Algemeen vraagscherm voor de onboarding: één vraag per scherm, grote knoppen, voortgangsbalk.
-// Gebruikt door de profielvragen (stap 2) en de smaaktest (stap 3).
+// Algemeen vraagscherm: één vraag per scherm, grote knoppen, voortgangsbalk.
+// Gebruikt door de profielvragen (stap 2), de smaaktest (stap 3) en het aanpassen van één antwoord (Profiel).
 import { useEffect, useRef, useState } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { ProgressBar, STEPS } from '../pages/Onboarding';
@@ -20,6 +20,8 @@ interface FlowProps {
   lastLabel: string; // knoptekst op de laatste vraag
   /** Extra uitleg onder de opties, afhankelijk van het antwoord. */
   renderNote?: (key: string, value: unknown) => React.ReactNode;
+  /** Eén antwoord aanpassen vanuit Profiel: geen voortgangsbalk, na opslaan terug naar `nextPath`. */
+  editMode?: boolean;
 }
 
 /** Leest :q uit de route en bewaakt dat je niet verder springt dan de eerste open vraag. */
@@ -33,7 +35,38 @@ export function QuestionFlow(props: FlowProps) {
 
 const AUTO_ADVANCE_MS = 250;
 
-function QuestionScreen({ index, step, questions, answers, save, basePath, prevPath, nextPath, lastLabel, renderNote }: FlowProps & { index: number }) {
+/** Eén vraag aanpassen (Profiel > Mijn voorkeuren). Na opslaan terug naar `returnPath` met een bevestiging. */
+export function EditQuestion({
+  question,
+  answers,
+  save,
+  returnPath,
+  renderNote,
+}: {
+  question: FlowQuestion;
+  answers: Answers;
+  save: FlowProps['save'];
+  returnPath: string;
+  renderNote?: FlowProps['renderNote'];
+}) {
+  return (
+    <QuestionScreen
+      index={0}
+      step={0}
+      questions={[question]}
+      answers={answers}
+      save={save}
+      basePath={returnPath}
+      prevPath={returnPath}
+      nextPath={returnPath}
+      lastLabel="Opslaan"
+      renderNote={renderNote}
+      editMode
+    />
+  );
+}
+
+function QuestionScreen({ index, step, questions, answers, save, basePath, prevPath, nextPath, lastLabel, renderNote, editMode }: FlowProps & { index: number }) {
   const question = questions[index];
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +83,9 @@ function QuestionScreen({ index, step, questions, answers, save, basePath, prevP
   const next = isLast ? nextPath : `${basePath}/${index + 2}`;
   const back = index === 0 ? prevPath : `${basePath}/${index}`;
   const answered = question.multi ? none || multi.length > 0 : current !== null;
+
+  // In bewerkmodus geven we mee wat er is aangepast, zodat Profiel een bevestiging kan tonen.
+  const goNext = () => navigate(next, editMode ? { replace: true, state: { saved: question.topic } } : undefined);
 
   async function persist(patch: Answers): Promise<boolean> {
     setSaving(true);
@@ -69,12 +105,12 @@ function QuestionScreen({ index, step, questions, answers, save, basePath, prevP
     if (saving) return;
     setPending(value);
     if (!(await persist({ [question.key]: value }))) return setPending(null);
-    timer.current = window.setTimeout(() => navigate(next), AUTO_ADVANCE_MS);
+    timer.current = window.setTimeout(() => goNext(), AUTO_ADVANCE_MS);
   }
 
   async function submitMulti() {
     if (!answered || saving) return;
-    if (await persist({ [question.key]: none ? [] : multi })) navigate(next);
+    if (await persist({ [question.key]: none ? [] : multi })) goNext();
   }
 
   const isSelected = (value: FlowOption['value']) => {
@@ -83,11 +119,15 @@ function QuestionScreen({ index, step, questions, answers, save, basePath, prevP
   };
 
   return (
-    <div className="flex min-h-dvh flex-col bg-xxl-grey px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-      <ProgressBar step={step} total={STEPS.length} sub={{ current: index + 1, total: questions.length }} />
+    <main className="flex min-h-dvh flex-col bg-xxl-grey px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      {editMode ? (
+        <p className="text-xs font-extrabold tracking-wider uppercase">Antwoord aanpassen</p>
+      ) : (
+        <ProgressBar step={step} total={STEPS.length} sub={{ current: index + 1, total: questions.length }} />
+      )}
 
       <div className="flex-1 py-8">
-        <p className="text-xs font-extrabold tracking-wider text-xxl-red uppercase">{question.topic}</p>
+        <p className="text-xs font-extrabold tracking-wider text-xxl-black uppercase">{question.topic}</p>
         <h1 id="question-title" className="mt-1 text-2xl leading-tight font-black">
           {question.title}
         </h1>
@@ -140,13 +180,13 @@ function QuestionScreen({ index, step, questions, answers, save, basePath, prevP
         </Link>
         <button
           type="button"
-          onClick={question.multi ? submitMulti : () => navigate(next)}
+          onClick={question.multi ? submitMulti : () => (editMode ? navigate(next) : goNext())}
           disabled={!answered || saving}
           className="min-h-14 rounded-md bg-xxl-red text-base font-extrabold text-xxl-white uppercase disabled:opacity-40"
         >
           {saving ? 'Opslaan…' : isLast ? lastLabel : 'Volgende'}
         </button>
       </div>
-    </div>
+    </main>
   );
 }

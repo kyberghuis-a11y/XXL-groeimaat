@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import type { KeyValueStorage } from '../auth/demoAuth';
 import { addToCart, cartRows, findVariant, MAX_QUANTITY, parseCart, setQuantity, summarize } from '../cart/cart';
 import { expandVariants, getProductLine } from '../data/catalog';
-import { spentThisMonth } from '../pages/Orders';
+import { spentThisMonth } from './spending';
 import { amsterdamParts, amsterdamTime, expectedDelivery, formatDayLong, relativeDay, shipDate } from './delivery';
 import { buildOrder, clearDemoOrders, createDemoOrderService, createSupabaseOrderService, fromOrderRow, OrderError } from './orderService';
 import { ORDER_STATUSES, PAYMENT_METHODS, isOngoing, makeOrderNumber, simulatedStatus, type Order } from './types';

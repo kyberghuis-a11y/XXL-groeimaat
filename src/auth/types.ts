@@ -20,6 +20,8 @@ export interface AuthService {
   signUp(input: { name: string; email: string; password: string }): Promise<SignUpResult>;
   signIn(input: { email: string; password: string }): Promise<AppUser>;
   signOut(): Promise<void>;
+  /** Naam aanpassen (Profiel > Account). */
+  updateName(name: string): Promise<AppUser>;
   /** AVG: account en alle gegevens verwijderen. */
   deleteAccount(): Promise<void>;
 }

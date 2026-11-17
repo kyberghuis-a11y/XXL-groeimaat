@@ -4,6 +4,7 @@ import type { ProductLine } from '../data/types';
 import { formatEuro } from '../lib/format';
 import { StarIcon } from './Icons';
 import { ProductImage } from './ProductImage';
+import { flavorCountText } from '../lib/productText';
 import { useLineMatch } from '../recommend/useAdvice';
 
 export function Badge({ badge }: { badge: ProductLine['badge'] }) {
@@ -26,7 +27,7 @@ export function CaffeineLabel({ product }: { product: ProductLine }) {
 
 export function Rating({ product, size = 'sm' }: { product: ProductLine; size?: 'sm' | 'md' }) {
   if (product.rating === null || product.review_count === null) {
-    return <p className={`${size === 'sm' ? 'text-[11px]' : 'text-sm'} text-xxl-black/50`}>Nog geen beoordeling</p>;
+    return <p className={`${size === 'sm' ? 'text-[11px]' : 'text-sm'} text-xxl-black/70`}>Nog geen beoordeling</p>;
   }
   const full = Math.round(product.rating);
   return (
@@ -41,13 +42,6 @@ export function Rating({ product, size = 'sm' }: { product: ProductLine; size?: 
       </span>
     </p>
   );
-}
-
-export function flavorCountText(product: ProductLine): string | null {
-  const named = product.flavors.filter((f) => f.name !== null).length;
-  if (named === 0) return null;
-  const total = Math.max(product.flavor_count_total ?? 0, named);
-  return `${total} ${total === 1 ? 'smaak' : 'smaken'}`;
 }
 
 export function ProductCard({ product }: { product: ProductLine }) {
@@ -67,7 +61,7 @@ export function ProductCard({ product }: { product: ProductLine }) {
         {match && (
           <span
             className={`absolute right-2 bottom-2 rounded-full px-2 py-0.5 text-[11px] font-extrabold ${
-              match.status === 'match' ? 'bg-xxl-black text-xxl-white' : 'bg-xxl-white text-xxl-black/60 ring-1 ring-xxl-black/15'
+              match.status === 'match' ? 'bg-xxl-black text-xxl-white' : 'bg-xxl-white text-xxl-black/70 ring-1 ring-xxl-black/15'
             }`}
           >
             {match.status === 'match' ? `${match.score}% match` : 'Past niet bij jou'}
@@ -75,13 +69,13 @@ export function ProductCard({ product }: { product: ProductLine }) {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-3">
-        <h3 className="text-sm leading-tight font-extrabold group-hover:underline">{product.name}</h3>
+        <h2 className="text-sm leading-tight font-extrabold group-hover:underline">{product.name}</h2>
         <Rating product={product} />
-        {flavors && <p className="text-[11px] text-xxl-black/60">{flavors}</p>}
+        {flavors && <p className="text-[11px] text-xxl-black/70">{flavors}</p>}
         <CaffeineLabel product={product} />
         <div className="mt-auto pt-2">
           <p className="text-base font-extrabold text-xxl-red">Vanaf {formatEuro(fromPrice(product))}</p>
-          <p className="text-[11px] text-xxl-black/60">
+          <p className="text-[11px] text-xxl-black/70">
             {pps !== null ? `${formatEuro(pps)} per portie` : 'Prijs per portie volgt'}
           </p>
         </div>

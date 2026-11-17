@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 import { PageTitle } from '../components/Layout';
 import { useAuth } from '../auth/AuthContext';
-import { AccountSection } from './Account';
 import { useProfile } from '../profile/ProfileContext';
-import { QUESTIONS, answerLabel, firstUnanswered } from '../profile/questions';
-import { CONCEPT_LABEL, DISCLAIMER, FLAVOR_FAMILY_LABELS } from '../lib/format';
+import { QUESTIONS, firstUnanswered } from '../profile/questions';
+import { DISCLAIMER } from '../lib/format';
 import { firstOpenQuestion } from '../lib/questionFlow';
 import { TASTE_QUESTIONS } from '../taste/questions';
 import { useTaste } from '../taste/TasteContext';
 import { personaTitle } from '../taste/tasteProfile';
-import { startAdvice, useFamilySuggestions } from './TasteScreens';
+import { startAdvice, useFamilySuggestions } from '../taste/advice';
 import { AdviceList } from '../components/AdviceList';
 import { useAdvice } from '../recommend/useAdvice';
 
@@ -27,7 +26,7 @@ export function Home() {
       >
         Bekijk alle XXL-producten
       </Link>
-      <p className="text-xs leading-relaxed text-xxl-black/60">{DISCLAIMER}</p>
+      <p className="text-xs leading-relaxed text-xxl-black/70">{DISCLAIMER}</p>
     </div>
   );
 }
@@ -109,92 +108,5 @@ function OnboardingCard() {
         Bekijk je smaakprofiel
       </Link>
     </section>
-  );
-}
-
-/** Profiel: korte samenvatting van het smaakprofiel. */
-function MyTaste() {
-  const taste = useTaste();
-  if (taste.loading) return null;
-  return (
-    <section className="rounded-lg bg-xxl-white p-5" aria-labelledby="taste-title">
-      <h2 id="taste-title" className="text-base font-extrabold uppercase">
-        Mijn smaakprofiel
-      </h2>
-      {taste.profile ? (
-        <>
-          <p className="mt-2 font-bold">{personaTitle(taste.profile)}</p>
-          <p className="mt-1 text-sm">Top 3: {taste.profile.top_families.map((f) => FLAVOR_FAMILY_LABELS[f]).join(', ')}</p>
-          <Link to="/onboarding/4" className="mt-2 inline-flex min-h-11 items-center text-sm font-bold underline underline-offset-4">
-            Bekijk je smaakprofiel
-          </Link>
-          <p className="text-xs text-xxl-black/60">De smaaktest opnieuw doen komt in een volgende stap (bouwstap 8).</p>
-        </>
-      ) : (
-        <p className="mt-2 text-sm text-xxl-black/70">Je hebt de smaaktest nog niet gedaan.</p>
-      )}
-    </section>
-  );
-}
-
-
-/** Overzicht van de onboarding-antwoorden. Aanpassen komt in bouwstap 8. */
-function MyAnswers() {
-  const { answers, loading } = useProfile();
-  if (loading) return null;
-  const next = firstUnanswered(answers);
-  return (
-    <section className="rounded-lg bg-xxl-white p-5" aria-labelledby="answers-title">
-      <h2 id="answers-title" className="text-base font-extrabold uppercase">
-        Mijn voorkeuren
-      </h2>
-      <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
-        {QUESTIONS.map((q) => (
-          <div key={q.key} className="contents">
-            <dt className="font-semibold">{q.topic}</dt>
-            <dd>{answerLabel(q, answers)}</dd>
-          </div>
-        ))}
-      </dl>
-      {next !== null ? (
-        <Link to={`/onboarding/2/${next}`} className="mt-4 flex min-h-12 items-center justify-center rounded-md bg-xxl-red text-sm font-extrabold text-xxl-white uppercase">
-          Vragen afmaken
-        </Link>
-      ) : (
-        <p className="mt-3 text-xs text-xxl-black/60">Je antwoorden aanpassen komt in een volgende stap (bouwstap 8).</p>
-      )}
-    </section>
-  );
-}
-
-const PAYMENT_METHODS = ['iDEAL', 'Mastercard', 'Amex', 'Klarna', 'SEPA', 'Apple Pay', 'Google Pay', 'PayPal', 'Bancontact'];
-
-export function Profile() {
-  return (
-    <div className="space-y-4 p-4">
-      <PageTitle>Profiel</PageTitle>
-      <MyAnswers />
-      <MyTaste />
-      <AccountSection />
-
-      <footer className="space-y-4 rounded-lg bg-xxl-black p-5 text-sm text-xxl-white">
-        <div>
-          <h2 className="text-xs font-extrabold tracking-wider uppercase">Klantenservice XXL Nutrition</h2>
-          <p className="mt-1 text-xxl-white/80">Werkdagen 08:00–22:00</p>
-          <p className="text-xxl-white/80">Weekend 12:00–16:00</p>
-        </div>
-        <div>
-          <h2 className="text-xs font-extrabold tracking-wider uppercase">Betaalmethoden</h2>
-          <ul className="mt-2 flex flex-wrap gap-1.5">
-            {PAYMENT_METHODS.map((m) => (
-              <li key={m} className="rounded bg-xxl-white px-2 py-1 text-[11px] font-bold text-xxl-black">
-                {m}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <p className="border-t border-xxl-white/20 pt-3 text-xs text-xxl-white/60">{CONCEPT_LABEL}</p>
-      </footer>
-    </div>
   );
 }

@@ -219,7 +219,7 @@ describe('opslag', () => {
 
 describe('beginnerstips', () => {
   it('noemen alleen producten die bij voeding en leeftijd passen', async () => {
-    const { beginnerTips } = await import('../pages/TasteScreens');
+    const { beginnerTips } = await import('./advice');
     const all = beginnerTips('water', { is_adult: true, diet: [] }).join(' ');
     expect(all).toMatch(/Whey Delicious 450 g/);
     expect(all).toMatch(/Clear Whey/);

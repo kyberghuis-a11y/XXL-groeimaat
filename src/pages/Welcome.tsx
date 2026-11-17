@@ -9,12 +9,12 @@ export function Welcome() {
   if (!loading && user) return <Navigate to="/home" replace />;
 
   return (
-    <div className="flex min-h-dvh flex-col bg-xxl-black px-6 pt-8 pb-[max(2rem,env(safe-area-inset-bottom))] text-xxl-white">
+    <main className="flex min-h-dvh flex-col bg-xxl-black px-6 pt-8 pb-[max(2rem,env(safe-area-inset-bottom))] text-xxl-white">
       <p className="self-start border border-xxl-white/40 px-2 py-1 text-[11px] font-bold tracking-wide uppercase">{CONCEPT_LABEL}</p>
 
       <div className="flex flex-1 flex-col justify-center py-10">
         <Logo className="text-4xl" />
-        <p className="mt-3 text-sm font-bold tracking-[0.2em] text-xxl-red uppercase">Beyond your limits</p>
+        <p className="mt-3 text-sm font-bold tracking-[0.2em] uppercase underline decoration-xxl-red decoration-2 underline-offset-8">Beyond your limits</p>
         <h1 className="mt-8 text-3xl leading-tight font-black">
           Weet binnen 3 minuten welk XXL-product en welke smaak bij jou past.
         </h1>
@@ -48,6 +48,6 @@ export function Welcome() {
           XXL Groeimaat beveelt alleen producten van XXL Nutrition aan. Het is geen onafhankelijke vergelijking.
         </p>
       </div>
-    </div>
+    </main>
   );
 }

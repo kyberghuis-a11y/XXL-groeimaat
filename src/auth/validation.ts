@@ -19,11 +19,17 @@ export function validateEmail(email: string): string | undefined {
   return undefined;
 }
 
+export function validateName(name: string): string | undefined {
+  const value = name.trim();
+  if (!value) return 'Vul je naam in.';
+  if (value.length > 60) return 'Je naam mag maximaal 60 tekens zijn.';
+  return undefined;
+}
+
 export function validateSignUp(input: SignUpInput): FieldErrors<SignUpInput> {
   const errors: FieldErrors<SignUpInput> = {};
-  const name = input.name.trim();
-  if (!name) errors.name = 'Vul je naam in.';
-  else if (name.length > 60) errors.name = 'Je naam mag maximaal 60 tekens zijn.';
+  const name = validateName(input.name);
+  if (name) errors.name = name;
 
   const email = validateEmail(input.email);
   if (email) errors.email = email;

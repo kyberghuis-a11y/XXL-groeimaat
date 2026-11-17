@@ -50,7 +50,7 @@ function Totals({ s }: { s: CartSummary }) {
       <dt className="pt-2 text-base font-extrabold">Totaal</dt>
       <dd className="pt-2 text-right text-base font-extrabold">{formatEuro(s.subtotal)}</dd>
       {!s.freeShipping && (
-        <dd className="col-span-2 text-xs text-xxl-black/60">
+        <dd className="col-span-2 text-xs text-xxl-black/70">
           De verzendkosten onder {formatEuro(FREE_SHIPPING_FROM)} zijn nog niet bekend en tellen in deze demo niet mee.
         </dd>
       )}
@@ -183,7 +183,7 @@ export function CheckoutPage() {
             <li key={r.variant.id} className="flex justify-between gap-2">
               <span>
                 {r.quantity}× {r.line.name}
-                <span className="text-xxl-black/60"> · {[r.variant.flavor, r.variant.size_label].filter(Boolean).join(' · ')}</span>
+                <span className="text-xxl-black/70"> · {[r.variant.flavor, r.variant.size_label].filter(Boolean).join(' · ')}</span>
               </span>
               <span className="shrink-0">{formatEuro(r.total)}</span>
             </li>

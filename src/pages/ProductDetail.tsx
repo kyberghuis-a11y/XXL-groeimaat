@@ -90,7 +90,7 @@ function ProductDetailView({ id }: { id: string }) {
     return (
       <div className="p-6 text-center">
         <p className="text-lg font-black uppercase">Product niet gevonden</p>
-        <Link to="/ontdek" className="mt-4 inline-block font-bold text-xxl-red underline">
+        <Link to="/ontdek" className="mt-4 inline-block font-bold underline decoration-xxl-red decoration-2">
           Terug naar Ontdek
         </Link>
       </div>
@@ -157,14 +157,14 @@ function ProductDetailView({ id }: { id: string }) {
         </Section>
 
         <section className="border-t border-xxl-black/10 py-5" aria-live="polite">
-          <p className="text-sm text-xxl-black/60">Vanaf {formatEuro(fromPrice(product))}</p>
+          <p className="text-sm text-xxl-black/70">Vanaf {formatEuro(fromPrice(product))}</p>
           <p className="text-3xl font-black text-xxl-red">{formatEuro(size.price_eur)}</p>
           <p className="text-sm text-xxl-black/70">
             {size.label}
             {size.servings !== null && ` · ${size.servings} porties`}
             {pps !== null ? ` · ${formatEuro(pps)} per portie` : ' · prijs per portie volgt'}
           </p>
-          {size.needs_check && <p className="mt-1 text-xs text-xxl-black/50">Prijs is een indicatie en wordt nog gecontroleerd.</p>}
+          {size.needs_check && <p className="mt-1 text-xs text-xxl-black/70">Prijs is een indicatie en wordt nog gecontroleerd.</p>}
         </section>
 
         {namedFlavors.length > 0 && (
@@ -173,7 +173,7 @@ function ProductDetailView({ id }: { id: string }) {
               {product.flavors.map((f, i) => (
                 <OptionButton key={f.name ?? i} active={i === flavorIndex} onClick={() => setFlavorIndex(i)}>
                   <span className="block">{f.name}</span>
-                  <span className={`block text-[11px] font-normal ${i === flavorIndex ? 'text-xxl-white/70' : 'text-xxl-black/50'}`}>
+                  <span className={`block text-[11px] font-normal ${i === flavorIndex ? 'text-xxl-white/70' : 'text-xxl-black/70'}`}>
                     {FLAVOR_FAMILY_LABELS[f.family]}
                     {match?.status === 'match' && ` · ${match.byFlavor.has(f.name) ? `${match.byFlavor.get(f.name)}% match` : 'lust je niet'}`}
                   </span>
@@ -181,7 +181,7 @@ function ProductDetailView({ id }: { id: string }) {
               ))}
             </div>
             {knownTotal !== null && knownTotal > namedFlavors.length && (
-              <p className="mt-2 text-xs text-xxl-black/50">
+              <p className="mt-2 text-xs text-xxl-black/70">
                 XXL heeft {knownTotal} smaken; {namedFlavors.length} staan al in de app.
               </p>
             )}
@@ -230,7 +230,7 @@ function ProductDetailView({ id }: { id: string }) {
             {product.allergens.length > 0 ? `Bevat: ${product.allergens.join(', ')}.` : 'Geen allergenen bekend in onze gegevens.'}
           </p>
           {!product.allergens_complete && (
-            <p className="mt-1 text-xs text-xxl-black/60">
+            <p className="mt-1 text-xs text-xxl-black/70">
               Deze informatie is nog niet volledig gecontroleerd. Check altijd de verpakking of de productpagina van XXL Nutrition.
             </p>
           )}
@@ -238,7 +238,7 @@ function ProductDetailView({ id }: { id: string }) {
 
         {product.needs_check && (
           <Section title="Nog te controleren">
-            <ul className="list-disc space-y-1 pl-5 text-xs text-xxl-black/60">
+            <ul className="list-disc space-y-1 pl-5 text-xs text-xxl-black/70">
               {product.check_notes.map((n) => (
                 <li key={n}>{n}</li>
               ))}

@@ -33,7 +33,7 @@ export function Discover() {
 
       <label className="relative block">
         <span className="sr-only">Zoek op product of smaak</span>
-        <SearchIcon size={20} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-xxl-black/50" />
+        <SearchIcon size={20} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-xxl-black/70" />
         <input
           ref={searchRef}
           type="search"
@@ -87,7 +87,7 @@ export function Discover() {
           <strong>{results.length}</strong> {results.length === 1 ? 'productlijn' : 'productlijnen'}
         </p>
         {(count > 0 || filters.query) && (
-          <button type="button" onClick={clearAll} className="min-h-11 font-bold text-xxl-red underline underline-offset-4">
+          <button type="button" onClick={clearAll} className="min-h-11 font-bold underline decoration-xxl-red decoration-2 underline-offset-4">
             Wis filters
           </button>
         )}

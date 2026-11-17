@@ -2,20 +2,13 @@ import { Link } from 'react-router-dom';
 import type { AdviceGroup, Recommendation } from '../recommend/engine';
 import { formatEuro } from '../lib/format';
 import { ProductImage } from './ProductImage';
+import { productLink } from '../recommend/links';
 
 const CATEGORY_TITLE: Record<AdviceGroup['category'], { title: string; intro: string }> = {
   Eiwitshake: { title: 'Eiwitshake', intro: 'Je basis: een eiwitshake die bij je doel en smaak past.' },
   Creatine: { title: 'Creatine', intro: 'Een kleine schep per dag, door je shake of sap.' },
   Extra: { title: 'Handige extra’s', intro: 'Niet nodig om te beginnen, wel handig bij jouw doel.' },
 };
-
-/** Link naar de productpagina met smaak en formaat al gekozen. */
-export function productLink(r: Pick<Recommendation, 'line' | 'flavor' | 'size'>): string {
-  const params = new URLSearchParams();
-  if (r.flavor.name) params.set('smaak', r.flavor.name);
-  params.set('formaat', r.size.label);
-  return `/product/${r.line.id}?${params.toString()}`;
-}
 
 function MatchBadge({ score }: { score: number }) {
   return (
@@ -46,7 +39,7 @@ function AdviceCard({ r }: { r: Recommendation }) {
           </p>
           <div className="mt-1 flex flex-wrap items-baseline gap-x-2">
             <span className="text-base font-extrabold text-xxl-red">{formatEuro(r.size.price_eur)}</span>
-            <span className="text-xs text-xxl-black/60">
+            <span className="text-xs text-xxl-black/70">
               {r.pricePerServing !== null ? `${formatEuro(r.pricePerServing)} per portie` : 'prijs per portie volgt'}
             </span>
           </div>
