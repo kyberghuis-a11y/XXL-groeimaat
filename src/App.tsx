@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from './auth/AuthContext';
 import { AppShell, TabLayout } from './components/Layout';
+import { ScrollToTop } from './components/ScrollToTop';
 import { Privacy, SignIn } from './pages/Account';
 import { CatalogStateProvider } from './lib/catalogState';
 import { Discover } from './pages/Discover';
@@ -16,6 +17,7 @@ import { TasteProvider } from './taste/TasteContext';
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AuthProvider>
       <ProfileProvider>
       <TasteProvider>

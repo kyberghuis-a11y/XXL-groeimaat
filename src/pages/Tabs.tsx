@@ -11,6 +11,8 @@ import { TASTE_QUESTIONS } from '../taste/questions';
 import { useTaste } from '../taste/TasteContext';
 import { personaTitle } from '../taste/tasteProfile';
 import { startAdvice, useFamilySuggestions } from './TasteScreens';
+import { AdviceList } from '../components/AdviceList';
+import { useAdvice } from '../recommend/useAdvice';
 
 export function Home() {
   const { user } = useAuth();
@@ -19,12 +21,7 @@ export function Home() {
     <div className="space-y-4 p-4">
       <PageTitle>{user?.name ? `Hoi ${user.name}` : 'Jouw advies'}</PageTitle>
       {!loading && <OnboardingCard />}
-      <ComingSoon title="Top 3 per categorie" step="bouwstap 6">
-        <p className="mt-2 text-sm text-xxl-black/70">
-          Hier zie je straks per categorie de 3 XXL-producten die het best bij je passen, met prijs per portie en de uitleg
-          "Past bij jou omdat…".
-        </p>
-      </ComingSoon>
+      <AdviceSection />
       <Link
         to="/ontdek"
         className="flex min-h-14 items-center justify-center rounded-md bg-xxl-red text-sm font-extrabold text-xxl-white uppercase"
@@ -33,6 +30,30 @@ export function Home() {
       </Link>
       <p className="text-xs leading-relaxed text-xxl-black/60">{DISCLAIMER}</p>
     </div>
+  );
+}
+
+/** Het advies: per categorie de top 3 (bouwstap 6). */
+function AdviceSection() {
+  const advice = useAdvice();
+  if (advice.status !== 'ready') return null;
+  if (advice.groups.length === 0)
+    return (
+      <section className="rounded-lg bg-xxl-white p-5" role="status">
+        <h2 className="text-base font-extrabold uppercase">Nog geen passend advies</h2>
+        <p className="mt-1 text-sm text-xxl-black/80">
+          We vinden nu geen XXL-product dat bij al je antwoorden past. Dat kan komen door je voeding, je leeftijd of smaken die je niet lust.
+          Bekijk alle producten in Ontdek, of pas je antwoorden later aan via Profiel.
+        </p>
+      </section>
+    );
+  return (
+    <section aria-labelledby="advice-title" className="space-y-3">
+      <h2 id="advice-title" className="sr-only">
+        Jouw advies
+      </h2>
+      <AdviceList groups={advice.groups} />
+    </section>
   );
 }
 

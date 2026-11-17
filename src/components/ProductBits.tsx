@@ -4,6 +4,7 @@ import type { ProductLine } from '../data/types';
 import { formatEuro } from '../lib/format';
 import { StarIcon } from './Icons';
 import { ProductImage } from './ProductImage';
+import { useLineMatch } from '../recommend/useAdvice';
 
 export function Badge({ badge }: { badge: ProductLine['badge'] }) {
   if (!badge) return null;
@@ -52,6 +53,7 @@ export function flavorCountText(product: ProductLine): string | null {
 export function ProductCard({ product }: { product: ProductLine }) {
   const pps = bestPricePerServing(product);
   const flavors = flavorCountText(product);
+  const match = useLineMatch(product);
   return (
     <Link
       to={`/product/${product.id}`}
@@ -62,6 +64,15 @@ export function ProductCard({ product }: { product: ProductLine }) {
         <div className="absolute top-2 left-2 flex flex-col items-start gap-1">
           <Badge badge={product.badge} />
         </div>
+        {match && (
+          <span
+            className={`absolute right-2 bottom-2 rounded-full px-2 py-0.5 text-[11px] font-extrabold ${
+              match.status === 'match' ? 'bg-xxl-black text-xxl-white' : 'bg-xxl-white text-xxl-black/60 ring-1 ring-xxl-black/15'
+            }`}
+          >
+            {match.status === 'match' ? `${match.score}% match` : 'Past niet bij jou'}
+          </span>
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-3">
         <h3 className="text-sm leading-tight font-extrabold group-hover:underline">{product.name}</h3>

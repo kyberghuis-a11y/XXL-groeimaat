@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useLineMatch } from '../recommend/useAdvice';
 import { BackIcon, CheckIcon, TruckIcon } from '../components/Icons';
 import { Badge, CaffeineLabel, Rating } from '../components/ProductBits';
 import { ProductImage } from '../components/ProductImage';
@@ -39,8 +40,11 @@ export function ProductDetail() {
 function ProductDetailView({ id }: { id: string }) {
   const navigate = useNavigate();
   const product = getProductLine(id);
-  const [flavorIndex, setFlavorIndex] = useState(0);
-  const [sizeIndex, setSizeIndex] = useState(0);
+  // Vanuit het advies: ?smaak=…&formaat=… kiest die smaak en dat formaat alvast.
+  const [params] = useSearchParams();
+  const [flavorIndex, setFlavorIndex] = useState(() => Math.max(0, product?.flavors.findIndex((f) => f.name === params.get('smaak')) ?? 0));
+  const [sizeIndex, setSizeIndex] = useState(() => Math.max(0, product?.sizes.findIndex((s) => s.label === params.get('formaat')) ?? 0));
+  const match = useLineMatch(product);
 
   if (!product) {
     return (
@@ -83,6 +87,19 @@ function ProductDetailView({ id }: { id: string }) {
         <div className="mt-2">
           <Rating product={product} size="md" />
         </div>
+        {match?.status === 'match' && (
+          <p className="mt-2 inline-flex rounded-full bg-xxl-black px-2.5 py-1 text-xs font-extrabold text-xxl-white">{match.score}% match met jouw profiel</p>
+        )}
+        {match?.status === 'blocked' && (
+          <p className="mt-2 rounded-md border-2 border-xxl-black/15 p-3 text-sm">
+            <strong>Past niet bij jou:</strong> {match.reason.toLowerCase()}. Dit product raden we je daarom niet aan.
+          </p>
+        )}
+        {match?.status === 'disliked' && (
+          <p className="mt-2 rounded-md border-2 border-xxl-black/15 p-3 text-sm">
+            <strong>Past niet bij jouw smaak:</strong> alle bekende smaken zijn smaken die je niet lust.
+          </p>
+        )}
         <p className="mt-2 text-base font-semibold text-xxl-black/80">{product.tagline}</p>
 
         <Section title="In het kort">
@@ -115,6 +132,7 @@ function ProductDetailView({ id }: { id: string }) {
                   <span className="block">{f.name}</span>
                   <span className={`block text-[11px] font-normal ${i === flavorIndex ? 'text-xxl-white/70' : 'text-xxl-black/50'}`}>
                     {FLAVOR_FAMILY_LABELS[f.family]}
+                    {match?.status === 'match' && ` · ${match.byFlavor.has(f.name) ? `${match.byFlavor.get(f.name)}% match` : 'lust je niet'}`}
                   </span>
                 </OptionButton>
               ))}
