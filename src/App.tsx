@@ -7,12 +7,16 @@ import { CatalogStateProvider } from './lib/catalogState';
 import { Discover } from './pages/Discover';
 import { Onboarding } from './pages/Onboarding';
 import { ProductDetail } from './pages/ProductDetail';
-import { Home, Orders, Profile } from './pages/Tabs';
+import { Home, Profile } from './pages/Tabs';
+import { OrdersPage } from './pages/Orders';
+import { CartPage, CheckoutPage } from './pages/Cart';
 import { Welcome } from './pages/Welcome';
 import { ProfileQuestions } from './pages/ProfileQuestions';
 import { ProfileProvider } from './profile/ProfileContext';
 import { TasteQuestions, TasteResult } from './pages/TasteScreens';
 import { TasteProvider } from './taste/TasteContext';
+import { CartProvider } from './cart/CartContext';
+import { OrdersProvider } from './orders/OrdersContext';
 
 export default function App() {
   return (
@@ -21,6 +25,8 @@ export default function App() {
       <AuthProvider>
       <ProfileProvider>
       <TasteProvider>
+      <OrdersProvider>
+      <CartProvider>
       <CatalogStateProvider>
         <AppShell>
           <Routes>
@@ -36,13 +42,17 @@ export default function App() {
               <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
               <Route path="/ontdek" element={<Discover />} />
               <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/bestellingen" element={<RequireAuth><Orders /></RequireAuth>} />
+              <Route path="/bestellingen" element={<RequireAuth><OrdersPage /></RequireAuth>} />
+              <Route path="/winkelwagen" element={<CartPage />} />
+              <Route path="/afrekenen" element={<CheckoutPage />} />
               <Route path="/profiel" element={<RequireAuth><Profile /></RequireAuth>} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AppShell>
       </CatalogStateProvider>
+      </CartProvider>
+      </OrdersProvider>
       </TasteProvider>
       </ProfileProvider>
       </AuthProvider>

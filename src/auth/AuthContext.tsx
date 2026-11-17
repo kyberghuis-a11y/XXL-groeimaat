@@ -6,6 +6,7 @@ import type { AppUser, AuthService } from './types';
 import { supabase } from '../lib/supabase';
 import { clearDemoProfile } from '../profile/profileService';
 import { clearDemoTaste } from '../taste/tasteService';
+import { clearDemoOrders } from '../orders/orderService';
 
 /**
  * Kiest de inlogmethode:
@@ -18,6 +19,7 @@ function createAuthService(): AuthService {
   return createDemoAuth(window.localStorage, undefined, (userId) => {
     clearDemoProfile(window.localStorage, userId);
     clearDemoTaste(window.localStorage, userId);
+    clearDemoOrders(window.localStorage, userId);
   });
 }
 

@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ComingSoon, PageTitle } from '../components/Layout';
+import { PageTitle } from '../components/Layout';
 import { useAuth } from '../auth/AuthContext';
 import { AccountSection } from './Account';
 import { useProfile } from '../profile/ProfileContext';
@@ -138,40 +137,6 @@ function MyTaste() {
   );
 }
 
-export function Orders() {
-  const [tab, setTab] = useState<'lopend' | 'eerder'>('lopend');
-  return (
-    <div className="space-y-4 p-4">
-      <PageTitle>Bestellingen</PageTitle>
-      <div className="grid grid-cols-2 rounded-md bg-xxl-white p-1" role="tablist">
-        {(
-          [
-            ['lopend', 'Lopend'],
-            ['eerder', 'Eerder besteld'],
-          ] as const
-        ).map(([id, label]) => (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            aria-selected={tab === id}
-            onClick={() => setTab(id)}
-            className={`min-h-11 rounded text-sm font-extrabold uppercase ${tab === id ? 'bg-xxl-black text-xxl-white' : 'text-xxl-black/70'}`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-      {tab === 'lopend' ? (
-        <ComingSoon title="Lopende bestellingen" step="bouwstap 7">
-          <p className="mt-2 text-sm text-xxl-black/70">Je ziet hier straks je verwachte leverdatum en de status van je bestelling.</p>
-        </ComingSoon>
-      ) : (
-        <ComingSoon title="Bestelhistorie" step="bouwstap 7" />
-      )}
-    </div>
-  );
-}
 
 /** Overzicht van de onboarding-antwoorden. Aanpassen komt in bouwstap 8. */
 function MyAnswers() {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { USP_MESSAGES } from '../lib/format';
+import { useCart } from '../cart/CartContext';
 import { BoxIcon, CartIcon, CompassIcon, HomeIcon, SearchIcon, UserIcon } from './Icons';
 
 /** Smalle kolom in het midden: mobile-first, op desktop max. 480 px breed. */
@@ -33,7 +34,7 @@ export function Logo({ className = '' }: { className?: string }) {
 
 export function Header() {
   const navigate = useNavigate();
-  const cartCount = 0; // Winkelwagen komt in bouwstap 7.
+  const cartCount = useCart().summary.count;
   return (
     <header className="flex items-center justify-between border-b border-xxl-black/10 bg-xxl-white px-4 py-3">
       <NavLink to="/home" aria-label="Naar Home" className="text-lg text-xxl-black">
@@ -48,17 +49,18 @@ export function Header() {
         >
           <SearchIcon />
         </button>
-        <button
-          type="button"
+        <NavLink
+          to="/winkelwagen"
           className="relative grid h-11 w-11 place-items-center rounded-full text-xxl-black hover:bg-xxl-grey"
-          aria-label={`Winkelwagen, ${cartCount} producten`}
-          title="Bestellen komt in een volgende stap"
+          aria-label={`Winkelwagen, ${cartCount} ${cartCount === 1 ? 'product' : 'producten'}`}
         >
           <CartIcon />
-          <span className="absolute top-1 right-1 grid h-4 min-w-4 place-items-center rounded-full bg-xxl-red px-1 text-[10px] font-bold text-xxl-white">
-            {cartCount}
-          </span>
-        </button>
+          {cartCount > 0 && (
+            <span className="absolute top-1 right-1 grid h-4 min-w-4 place-items-center rounded-full bg-xxl-red px-1 text-[10px] font-bold text-xxl-white">
+              {cartCount}
+            </span>
+          )}
+        </NavLink>
       </div>
     </header>
   );

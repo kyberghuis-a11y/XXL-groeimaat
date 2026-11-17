@@ -4,7 +4,9 @@ import { useLineMatch } from '../recommend/useAdvice';
 import { BackIcon, CheckIcon, TruckIcon } from '../components/Icons';
 import { Badge, CaffeineLabel, Rating } from '../components/ProductBits';
 import { ProductImage } from '../components/ProductImage';
-import { fromPrice, getProductLine, pricePerServing } from '../data/catalog';
+import { expandVariants, fromPrice, getProductLine, pricePerServing } from '../data/catalog';
+import { useCart } from '../cart/CartContext';
+import { useProfile } from '../profile/ProfileContext';
 import { formatEuro, FLAVOR_FAMILY_LABELS, USP_MESSAGES } from '../lib/format';
 
 function OptionButton({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
@@ -19,6 +21,43 @@ function OptionButton({ active, onClick, children }: { active: boolean; onClick:
     >
       {children}
     </button>
+  );
+}
+
+function AddToCart({ variantId, caffeineBlocked }: { variantId: string | undefined; caffeineBlocked: boolean }) {
+  const { add } = useCart();
+  const [added, setAdded] = useState(false);
+  if (caffeineBlocked)
+    return (
+      <p className="mt-2 rounded-md border-2 border-xxl-black/15 p-3 text-center text-sm">
+        <strong>Alleen voor 18+.</strong> Dit product bevat cafeïne.
+      </p>
+    );
+  return (
+    <div className="mt-2">
+      <button
+        type="button"
+        disabled={!variantId}
+        onClick={() => {
+          if (!variantId) return;
+          add(variantId);
+          setAdded(true);
+        }}
+        className="min-h-14 w-full rounded-md bg-xxl-red text-base font-extrabold text-xxl-white uppercase disabled:opacity-50"
+      >
+        In winkelwagen
+      </button>
+      <p className="mt-2 min-h-5 text-center text-sm" role="status">
+        {added && (
+          <>
+            Toegevoegd aan je winkelwagen.{' '}
+            <Link to="/winkelwagen" className="font-bold underline underline-offset-2">
+              Bekijk winkelwagen
+            </Link>
+          </>
+        )}
+      </p>
+    </div>
   );
 }
 
@@ -45,6 +84,7 @@ function ProductDetailView({ id }: { id: string }) {
   const [flavorIndex, setFlavorIndex] = useState(() => Math.max(0, product?.flavors.findIndex((f) => f.name === params.get('smaak')) ?? 0));
   const [sizeIndex, setSizeIndex] = useState(() => Math.max(0, product?.sizes.findIndex((s) => s.label === params.get('formaat')) ?? 0));
   const match = useLineMatch(product);
+  const { answers } = useProfile();
 
   if (!product) {
     return (
@@ -61,6 +101,9 @@ function ProductDetailView({ id }: { id: string }) {
   const size = product.sizes[sizeIndex];
   const pps = pricePerServing(size.price_eur, size.servings);
   const namedFlavors = product.flavors.filter((f) => f.name !== null);
+  const variant = expandVariants(product).find((v) => v.flavor === flavor.name && v.size_label === size.label);
+  // Harde regel: onder de 18 (of nog niet bevestigd na inloggen) geen cafeïne. Zonder account controleren we bij afrekenen.
+  const caffeineBlocked = product.labels.includes('bevat_cafeine') && answers.is_adult === false;
   const knownTotal = product.flavor_count_total;
 
   return (
@@ -155,17 +198,7 @@ function ProductDetailView({ id }: { id: string }) {
           </div>
         </Section>
 
-        <button
-          type="button"
-          disabled
-          className="mt-2 min-h-14 w-full cursor-not-allowed rounded-md bg-xxl-red text-base font-extrabold text-xxl-white uppercase opacity-50"
-          aria-describedby="order-later"
-        >
-          In winkelwagen
-        </button>
-        <p id="order-later" className="mt-2 text-center text-xs text-xxl-black/60">
-          Bestellen komt in een volgende stap.
-        </p>
+        <AddToCart variantId={variant?.id} caffeineBlocked={caffeineBlocked} />
 
         <Section title="Leverbeloftes">
           <ul className="space-y-1.5">
