@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ComingSoon, PageTitle } from '../components/Layout';
+import { useAuth } from '../auth/AuthContext';
+import { AccountSection } from './Account';
 import { CONCEPT_LABEL, DISCLAIMER } from '../lib/format';
 
 export function Home() {
+  const { user } = useAuth();
   return (
     <div className="space-y-4 p-4">
-      <PageTitle>Jouw advies</PageTitle>
+      <PageTitle>{user?.name ? `Hoi ${user.name}` : 'Jouw advies'}</PageTitle>
       <ComingSoon title="Top 3 per categorie" step="bouwstap 6">
         <p className="mt-2 text-sm text-xxl-black/70">
           Hier zie je straks per categorie de 3 XXL-producten die het best bij je passen, met prijs per portie en de uitleg
@@ -67,7 +70,7 @@ export function Profile() {
       <PageTitle>Profiel</PageTitle>
       <ComingSoon title="Mijn voorkeuren" step="bouwstap 8" />
       <ComingSoon title="Smaaktest opnieuw doen" step="bouwstap 8" />
-      <ComingSoon title="Account & privacy" step="bouwstap 3" />
+      <AccountSection />
 
       <footer className="space-y-4 rounded-lg bg-xxl-black p-5 text-sm text-xxl-white">
         <div>

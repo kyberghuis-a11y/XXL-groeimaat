@@ -16,13 +16,18 @@
 | Onderwerp | Besluit |
 |---|---|
 | Framework | React + Vite + TypeScript (strict), React Router, Tailwind CSS v4 |
-| Productdata fase 1 | Lokaal JSON-seedbestand (`src/data/products.seed.json`), gelezen via `src/data/catalog.ts`. In bouwstap 3 vervangt Supabase de inhoud van `catalog.ts`; de functienamen blijven gelijk. *Afwijking van de brief, omdat er nog geen Supabase-account is.* |
+| Productdata fase 1 | Lokaal JSON-seedbestand (`src/data/products.seed.json`), gelezen via `src/data/catalog.ts`. Blijft lokaal tot Supabase gekoppeld is; daarna kan Supabase de inhoud van `catalog.ts` vervangen (functienamen blijven gelijk). *Afwijking van de brief, omdat er nog geen Supabase-account is.* |
 | Productlijnen | 15 in plaats van 12: vitamines (D3, Cal & Mag, Omega 3) en Blast! Caffeine Free staan apart |
 | Datamodel | Extra velden t.o.v. de brief: `allergens[]` en `allergens_complete` (juridische eis), `tagline`, `description`, `flavor_count_total`, `needs_check`, `check_notes` |
 | Productfoto's | Foto's van XXL in `public/images/products/<id>.webp`, door de gebruiker zelf opgeslagen. Fallback-placeholder in `ProductImage` |
 | Logo | Geen XXL-logo. Tekstlogo "XXL GROEIMAAT" |
 | Populariteit | Sorteren op `review_count`. Zolang die `null` is: eerst bestsellers, daarna de seedvolgorde |
 | Lettertype | Tijdelijk Montserrat. Eén plek: `--font-brand` in `src/index.css` |
+| Inloggen (stap 3) | Contract `AuthService` in `src/auth/types.ts`, gebruikt via `useAuth()`. Supabase-modus als `VITE_SUPABASE_URL` en `VITE_SUPABASE_ANON_KEY` in `.env.local` staan, anders demo-modus (alleen naam en e-mail in localStorage, wachtwoord nooit opgeslagen). Setup: `docs/supabase-setup.md` |
+| Database | SQL in `supabase/migrations/` (handmatig draaien in de SQL Editor). RLS aan op elke tabel. Nieuwe tabellen krijgen `user_id ... references auth.users on delete cascade`, zodat "account verwijderen" alles wist |
+| Toegang | Ontdek en productdetail zonder account. Home, Bestellingen, Profiel en onboarding stap 2–4 alleen met account (`RequireAuth`) |
+| Leeftijd | `users.is_adult` bestaat al, maar wordt pas in bouwstap 4 gevraagd ("Ik ben 18 jaar of ouder") |
+| Wachtwoord vergeten | Nog niet gebouwd (niet in de brief). Kandidaat voor bouwstap 8 |
 
 ## Huisstijl
 - Kleuren zijn alleen Tailwind-tokens, gedefinieerd in `@theme` in `src/index.css`: `xxl-red`, `xxl-black`, `xxl-grey`, `xxl-white`. Gebruik nergens anders losse hexcodes.
@@ -37,6 +42,7 @@ npm install        # eenmalig
 npm run dev        # app starten op http://localhost:5173
 npm test           # Vitest-tests (logica + validatie van het seedbestand)
 npm run build      # typecheck + productiebuild (incl. PWA)
+cp .env.example .env.local   # daarna Supabase-sleutels invullen (zie docs/supabase-setup.md)
 ```
 Controle op hexcodes:
 ```bash
@@ -47,7 +53,7 @@ Dit hoort niets op te leveren.
 ## Status
 - [x] Bouwstap 1: projectopzet, navigatie en lege schermen
 - [x] Bouwstap 2: huisstijl-tokens, catalogus met seeddata, filters, zoeken, sorteren en productdetail
-- [ ] Bouwstap 3: account aanmaken en inloggen (Supabase)
+- [x] Bouwstap 3: account aanmaken, inloggen, uitloggen, account verwijderen, privacyverklaring. *Supabase-modus alleen getest met een nagebootste client; nog testen met een echt project.*
 - [ ] Bouwstap 4: onboarding, profielvragen opslaan
 - [ ] Bouwstap 5: smaakvragenlijst + smaakprofiel
 - [ ] Bouwstap 6: aanbevelingsalgoritme + aanbevelingsscherm

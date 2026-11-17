@@ -1,8 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
 import { Logo } from '../components/Layout';
 import { CONCEPT_LABEL, DISCLAIMER } from '../lib/format';
 
 export function Welcome() {
+  const { user, loading } = useAuth();
+  const deleted = Boolean((useLocation().state as { deleted?: boolean } | null)?.deleted);
+  if (!loading && user) return <Navigate to="/home" replace />;
+
   return (
     <div className="flex min-h-dvh flex-col bg-xxl-black px-6 pt-8 pb-[max(2rem,env(safe-area-inset-bottom))] text-xxl-white">
       <p className="self-start border border-xxl-white/40 px-2 py-1 text-[11px] font-bold tracking-wide uppercase">{CONCEPT_LABEL}</p>
@@ -19,15 +24,25 @@ export function Welcome() {
       </div>
 
       <div className="space-y-4">
+        {deleted && (
+          <p role="status" className="rounded-md bg-xxl-white p-3 text-sm font-semibold text-xxl-black">
+            Je account en gegevens zijn verwijderd.
+          </p>
+        )}
         <Link
           to="/onboarding/1"
           className="flex min-h-14 w-full items-center justify-center rounded-md bg-xxl-red text-base font-extrabold tracking-wide uppercase"
         >
           Start
         </Link>
-        <Link to="/ontdek" className="block text-center text-sm font-semibold text-xxl-white/80 underline underline-offset-4">
-          Eerst rondkijken in de producten
-        </Link>
+        <div className="flex justify-center gap-6 text-sm font-semibold text-xxl-white/80">
+          <Link to="/inloggen" className="flex min-h-11 items-center underline underline-offset-4">
+            Inloggen
+          </Link>
+          <Link to="/ontdek" className="flex min-h-11 items-center underline underline-offset-4">
+            Eerst rondkijken
+          </Link>
+        </div>
         <p className="text-xs leading-relaxed text-xxl-white/60">{DISCLAIMER}</p>
         <p className="text-xs leading-relaxed text-xxl-white/60">
           XXL Groeimaat beveelt alleen producten van XXL Nutrition aan. Het is geen onafhankelijke vergelijking.

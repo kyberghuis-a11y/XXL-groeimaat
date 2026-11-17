@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { AuthProvider, RequireAuth } from './auth/AuthContext';
 import { AppShell, TabLayout } from './components/Layout';
+import { Privacy, SignIn } from './pages/Account';
 import { CatalogStateProvider } from './lib/catalogState';
 import { Discover } from './pages/Discover';
 import { Onboarding } from './pages/Onboarding';
@@ -10,22 +12,27 @@ import { Welcome } from './pages/Welcome';
 export default function App() {
   return (
     <BrowserRouter>
+      <AuthProvider>
       <CatalogStateProvider>
         <AppShell>
           <Routes>
             <Route path="/" element={<Welcome />} />
             <Route path="/onboarding/:step" element={<Onboarding />} />
+            <Route path="/inloggen" element={<SignIn />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route element={<TabLayout />}>
-              <Route path="/home" element={<Home />} />
+              {/* Ontdek en productdetail zijn ook zonder account te bekijken. */}
+              <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
               <Route path="/ontdek" element={<Discover />} />
               <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/bestellingen" element={<Orders />} />
-              <Route path="/profiel" element={<Profile />} />
+              <Route path="/bestellingen" element={<RequireAuth><Orders /></RequireAuth>} />
+              <Route path="/profiel" element={<RequireAuth><Profile /></RequireAuth>} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AppShell>
       </CatalogStateProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
