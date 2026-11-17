@@ -1,0 +1,1011 @@
+{
+  "generated_from": "docs/productdata.md",
+  "researched_at": "2026-11-17",
+  "product_lines": [
+    {
+      "id": "whey-delicious",
+      "name": "Whey Delicious",
+      "category": "Whey-eiwit",
+      "tagline": "De best verkochte eiwitshake van XXL",
+      "beginner_info": "Een romige eiwitshake op basis van whey (melkeiwit). Handig na je training of als eiwitrijk tussendoortje.",
+      "short_bullets": [
+        "Romige shake in ±20 smaken",
+        "±24 g eiwit per portie van 30 g",
+        "Mengen met water of melk",
+        "Kleinste pot (450 g) is ideaal om een smaak te proberen"
+      ],
+      "description": "Whey Delicious is de bekendste eiwitshake van XXL Nutrition. De shake is romig en er is veel keuze in smaken, van chocolade tot speculaas. Twijfel je over een smaak? Begin met de pot van 450 gram.",
+      "labels": [
+        "bestseller"
+      ],
+      "badge": "bestseller",
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": 24,
+      "allergens": [
+        "melk"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/whey-delicious.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/catalogsearch/result/?q=Whey+Delicious",
+      "flavor_count_total": 20,
+      "needs_check": true,
+      "check_notes": [
+        "Volledige smakenlijst (±20) nog niet bekend",
+        "Prijzen 450 g en 2500 g komen van een verkooppartner",
+        "Eiwit per portie berekend uit ±80 g per 100 g"
+      ],
+      "flavors": [
+        {
+          "name": "Chocolade",
+          "family": "chocolade",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Sweet Vanille",
+          "family": "vanille",
+          "sweetness": 3,
+          "texture": "romig"
+        },
+        {
+          "name": "Vanille Caramel",
+          "family": "vanille",
+          "sweetness": 3,
+          "texture": "romig"
+        },
+        {
+          "name": "Vanille Kaneel",
+          "family": "vanille",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Speculaas",
+          "family": "koek",
+          "sweetness": 3,
+          "texture": "romig"
+        },
+        {
+          "name": "Salted Caramel",
+          "family": "koek",
+          "sweetness": 3,
+          "texture": "romig"
+        },
+        {
+          "name": "Banaan",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Aardbei",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Bosvruchten",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "450 g",
+          "size_grams": 450,
+          "servings": 15,
+          "price_eur": 19.99,
+          "source": "partner",
+          "needs_check": true
+        },
+        {
+          "label": "1000 g",
+          "size_grams": 1000,
+          "servings": 33,
+          "price_eur": 39.99,
+          "source": "xxl"
+        },
+        {
+          "label": "2500 g",
+          "size_grams": 2500,
+          "servings": 83,
+          "price_eur": 85.99,
+          "source": "partner",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "perfect-whey-protein",
+      "name": "Perfect Whey Protein",
+      "category": "Whey-eiwit",
+      "tagline": "Prijsbewuste whey in grote zakken",
+      "beginner_info": "Een whey-eiwitshake met een lage prijs per portie. Handig als je vaak een shake drinkt.",
+      "short_bullets": [
+        "13 smaken",
+        "23,6 g eiwit per portie van 30 g",
+        "Voordelig per portie",
+        "In zakken van 750 g en 2000 g"
+      ],
+      "description": "Perfect Whey Protein is een whey-concentraat met 78,7% eiwit. Een goede keuze als je al weet dat je eiwitshakes lekker vindt en op de prijs per portie wilt letten.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": 23.6,
+      "allergens": [
+        "melk"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/perfect-whey-protein.webp",
+      "xxl_url": "https://xxlnutrition.com/en/perfect-whey-protein?sku=16383",
+      "flavor_count_total": 13,
+      "needs_check": true,
+      "check_notes": [
+        "Prijs 4000 g onbekend, daarom niet opgenomen",
+        "Prijs 2000 g komt van een verkooppartner"
+      ],
+      "flavors": [
+        {
+          "name": "Chocolade",
+          "family": "chocolade",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Hazelnoot",
+          "family": "chocolade",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Cappuccino",
+          "family": "chocolade",
+          "sweetness": 1,
+          "texture": "romig"
+        },
+        {
+          "name": "Vanille",
+          "family": "vanille",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Naturel",
+          "family": "vanille",
+          "sweetness": 1,
+          "texture": "romig"
+        },
+        {
+          "name": "Cookies & Cream",
+          "family": "koek",
+          "sweetness": 3,
+          "texture": "romig"
+        },
+        {
+          "name": "Salted Caramel",
+          "family": "koek",
+          "sweetness": 3,
+          "texture": "romig"
+        },
+        {
+          "name": "Aardbei",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Banaan",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Aardbei-Banaan",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Kokos",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Pistache",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Yoghurt-Framboos",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "romig"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "750 g",
+          "size_grams": 750,
+          "servings": 25,
+          "price_eur": 21.99,
+          "source": "xxl"
+        },
+        {
+          "label": "2000 g",
+          "size_grams": 2000,
+          "servings": 66,
+          "price_eur": 46.99,
+          "source": "partner",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "whey-isolaat",
+      "name": "Whey Isolaat",
+      "category": "Whey-isolaat",
+      "tagline": "Extra puur eiwit met minder vet en lactose",
+      "beginner_info": "Een whey-isolaat: verder gefilterd dan gewone whey, met minder vet en lactose. Handig als je let op je calorieën.",
+      "short_bullets": [
+        "Tot 90% eiwit",
+        "Minder vet en lactose dan gewone whey",
+        "Mengen met water of melk"
+      ],
+      "description": "Whey Isolaat van XXL Nutrition is een verder gefilterde whey met minder vet en lactose. Een keuze voor wie droogtraint of gevoelig is voor lactose.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [
+        "melk"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/whey-isolaat.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/catalogsearch/result/?q=Whey+Isolaat",
+      "flavor_count_total": null,
+      "needs_check": true,
+      "check_notes": [
+        "Eiwit per portie onbekend",
+        "Controleren of het product lactosevrij is of alleen laag in lactose (raakt de harde regel uit de brief)",
+        "Smakenlijst komt van Decathlon"
+      ],
+      "flavors": [
+        {
+          "name": "Vanille",
+          "family": "vanille",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Naturel",
+          "family": "neutraal",
+          "sweetness": 1,
+          "texture": "romig"
+        },
+        {
+          "name": "Banaan",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Aardbei",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Framboos",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "450 g",
+          "size_grams": 450,
+          "servings": 15,
+          "price_eur": 25.99,
+          "source": "xxl"
+        },
+        {
+          "label": "1000 g",
+          "size_grams": 1000,
+          "servings": 33,
+          "price_eur": 53.99,
+          "source": "xxl"
+        }
+      ]
+    },
+    {
+      "id": "whey-protein-zero",
+      "name": "Whey Protein Zero",
+      "category": "Lactosevrij eiwit",
+      "tagline": "Whey-eiwit zonder lactose",
+      "beginner_info": "Een lactosevrije whey-shake. Bedoeld voor wie niet goed tegen lactose kan.",
+      "short_bullets": [
+        "Lactosevrij",
+        "4 smaken",
+        "Pot van 1000 g"
+      ],
+      "description": "Whey Protein Zero is de lactosevrije whey van XXL Nutrition. Kun je slecht tegen lactose? Dan is dit de whey om mee te beginnen.",
+      "labels": [
+        "lactosevrij"
+      ],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [
+        "melk"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/whey-protein-zero.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/whey-protein-zero",
+      "flavor_count_total": 4,
+      "needs_check": true,
+      "check_notes": [
+        "Eiwit per portie onbekend",
+        "Alleen de smaak vanille is bekend (4 in totaal)"
+      ],
+      "flavors": [
+        {
+          "name": "Vanille",
+          "family": "vanille",
+          "sweetness": 2,
+          "texture": "romig"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "1000 g",
+          "size_grams": 1000,
+          "servings": 33,
+          "price_eur": 42.99,
+          "source": "xxl"
+        }
+      ]
+    },
+    {
+      "id": "clear-whey-isolate",
+      "name": "Clear Whey Isolate",
+      "category": "Helder eiwit",
+      "tagline": "Fris als limonade, geen romige shake",
+      "beginner_info": "Een heldere eiwitdrank die je met water mengt. Smaakt fris, als limonade. Handig als je romige shakes niet lekker vindt.",
+      "short_bullets": [
+        "Fris als limonade",
+        "21,1 g eiwit per portie van 25 g",
+        "Altijd mengen met water",
+        "Fruitige smaken"
+      ],
+      "description": "Clear Whey Isolate is een heldere eiwitdrank op basis van whey-isolaat. Je mengt het met minstens 300 ml water. Een goede keuze als je shakes met water drinkt of niet van romig houdt.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": 21.1,
+      "allergens": [
+        "melk"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/clear-whey-isolate.webp",
+      "xxl_url": "https://xxlnutrition.com/en/clear-whey-isolate",
+      "flavor_count_total": null,
+      "needs_check": true,
+      "check_notes": [
+        "Prijzen komen van verkooppartners (adviesprijs)",
+        "Brief noemt 'zure kersen': controleren of dat Aardbei-Kers is"
+      ],
+      "flavors": [
+        {
+          "name": "Aardbei-Kers",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Sinaasappel",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Appel",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Ice Tea Peach",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Ice Tea Mango",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Pornstar Martini",
+          "family": "fruitig_fris",
+          "sweetness": 3,
+          "texture": "fris"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "500 g",
+          "size_grams": 500,
+          "servings": 20,
+          "price_eur": 29.99,
+          "source": "partner",
+          "needs_check": true
+        },
+        {
+          "label": "1000 g",
+          "size_grams": 1000,
+          "servings": 40,
+          "price_eur": 46.99,
+          "source": "partner",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "green-protein",
+      "name": "Green Protein",
+      "category": "Vegan eiwit",
+      "tagline": "Plantaardig eiwit, 100% vegan",
+      "beginner_info": "Een eiwitshake op basis van plantaardig eiwit. Voor wie vegan eet of geen melkeiwit wil.",
+      "short_bullets": [
+        "100% vegan",
+        "4 smaken",
+        "Zonder melkeiwit"
+      ],
+      "description": "Green Protein is de vegan eiwitshake van XXL Nutrition. Eet je plantaardig? Dan is dit je basis-eiwitshake.",
+      "labels": [
+        "vegan"
+      ],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [],
+      "allergens_complete": false,
+      "image_url": "/images/products/green-protein.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/green-protein-nzvt",
+      "flavor_count_total": 4,
+      "needs_check": true,
+      "check_notes": [
+        "Prijs tegenstrijdig: XXL 'vanaf €39,99', brief €23,99",
+        "Formaat en aantal porties onbekend",
+        "Alleen de smaak banaan is bekend",
+        "Allergenen (soja?) onbekend"
+      ],
+      "flavors": [
+        {
+          "name": "Banaan",
+          "family": "fruitig_zoet",
+          "sweetness": 2,
+          "texture": "romig"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "Formaat onbekend",
+          "size_grams": null,
+          "servings": null,
+          "price_eur": 39.99,
+          "source": "xxl",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "creatine-monohydraat",
+      "name": "Creatine Monohydraat",
+      "category": "Creatine",
+      "tagline": "100% pure creatine, 5 g per portie",
+      "beginner_info": "Creatine is een van de best onderzochte supplementen voor sporters. Je neemt elke dag een kleine schep van 5 gram.",
+      "short_bullets": [
+        "100% vegan",
+        "5 g per portie",
+        "Naturel of met smaakje",
+        "Lage prijs per portie"
+      ],
+      "description": "Creatine Monohydraat van XXL Nutrition is 100% pure creatine. De naturel-versie is smaakloos en meng je door sap of je shake.",
+      "labels": [
+        "vegan"
+      ],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [],
+      "allergens_complete": false,
+      "image_url": "/images/products/creatine-monohydraat.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/xxl-creatine-monohydraat",
+      "flavor_count_total": null,
+      "needs_check": true,
+      "check_notes": [
+        "Prijs 1000 g: XXL noemt 'tot €17,99', controleren",
+        "Allergenen controleren"
+      ],
+      "flavors": [
+        {
+          "name": "Naturel",
+          "family": "neutraal",
+          "sweetness": 1,
+          "texture": "fris"
+        },
+        {
+          "name": "Citroen",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Sinaasappel",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "250 g",
+          "size_grams": 250,
+          "servings": 50,
+          "price_eur": 8.99,
+          "source": "xxl"
+        },
+        {
+          "label": "500 g",
+          "size_grams": 500,
+          "servings": 100,
+          "price_eur": 15.99,
+          "source": "xxl"
+        },
+        {
+          "label": "1000 g",
+          "size_grams": 1000,
+          "servings": 200,
+          "price_eur": 17.99,
+          "source": "xxl",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "perfect-mass-gainer",
+      "name": "Perfect Mass Gainer",
+      "category": "Weight gainer",
+      "tagline": "Extra calorieën als aankomen lastig is",
+      "beginner_info": "Een shake met veel calorieën uit koolhydraten en eiwit. Alleen bedoeld als het je moeite kost om aan te komen.",
+      "short_bullets": [
+        "Veel calorieën per shake",
+        "±23 g eiwit per 100 g",
+        "6 smaken",
+        "Grote zak van 5000 g"
+      ],
+      "description": "Perfect Mass Gainer is bedoeld voor wie moeite heeft om genoeg te eten. Twijfel je? Begin dan eerst met een gewone eiwitshake.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [
+        "melk"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/perfect-mass-gainer.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/perfect-mass-gainer",
+      "flavor_count_total": 6,
+      "needs_check": true,
+      "check_notes": [
+        "Aantal porties per zak onbekend",
+        "Eiwit per portie onbekend",
+        "Alleen de smaak chocolade-hazelnoot is bekend"
+      ],
+      "flavors": [
+        {
+          "name": "Chocolade-Hazelnoot",
+          "family": "chocolade",
+          "sweetness": 3,
+          "texture": "romig"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "5000 g",
+          "size_grams": 5000,
+          "servings": null,
+          "price_eur": 59.99,
+          "source": "xxl"
+        }
+      ]
+    },
+    {
+      "id": "blast-pre-workout",
+      "name": "Blast! Pre Workout",
+      "category": "Pre-workout",
+      "tagline": "Energie en focus voor je training",
+      "beginner_info": "Een drank die je vóór je training neemt, met cafeïne. Alleen voor 18 jaar en ouder.",
+      "short_bullets": [
+        "Bevat cafeïne",
+        "30 doseringen",
+        "Zonder toegevoegde creatine",
+        "Frisse fruitsmaken"
+      ],
+      "description": "Blast! Pre Workout bevat onder meer citrulline malaat, bèta-alanine, taurine en cafeïne. Neem het niet laat op de dag. Gevoelig voor cafeïne? Kies dan Blast! Caffeine Free.",
+      "labels": [
+        "bevat_cafeine"
+      ],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [],
+      "allergens_complete": false,
+      "image_url": "/images/products/blast-pre-workout.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/blast-pre-workout",
+      "flavor_count_total": 8,
+      "needs_check": true,
+      "check_notes": [
+        "XXL noemt 8 smaken (2 cafeïnevrij), brief zegt 7",
+        "Gewicht van de pot onbekend",
+        "Allergenen controleren"
+      ],
+      "flavors": [
+        {
+          "name": "Orange",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Cherry",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Fruit Punch",
+          "family": "fruitig_fris",
+          "sweetness": 3,
+          "texture": "fris"
+        },
+        {
+          "name": "Green Apple",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        },
+        {
+          "name": "Melon",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "30 doseringen",
+          "size_grams": null,
+          "servings": 30,
+          "price_eur": 27.99,
+          "source": "xxl"
+        }
+      ]
+    },
+    {
+      "id": "blast-pre-workout-caffeine-free",
+      "name": "Blast! Pre Workout Caffeine Free",
+      "category": "Pre-workout",
+      "tagline": "Pre-workout zonder cafeïne",
+      "beginner_info": "Dezelfde pre-workout als Blast!, maar zonder cafeïne. Voor wie gevoelig is voor cafeïne of 's avonds traint.",
+      "short_bullets": [
+        "Zonder cafeïne",
+        "Pot van 300 g",
+        "Zonder toegevoegde creatine"
+      ],
+      "description": "Blast! Pre Workout Caffeine Free is de cafeïnevrije versie van Blast!. Handig als je 's avonds traint.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [],
+      "allergens_complete": false,
+      "image_url": "/images/products/blast-pre-workout-caffeine-free.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/blast-pre-workout",
+      "flavor_count_total": 2,
+      "needs_check": true,
+      "check_notes": [
+        "Prijs onbekend: tijdelijk de vanaf-prijs van Blast! gebruikt",
+        "Aantal doseringen onbekend",
+        "Tweede smaak onbekend"
+      ],
+      "flavors": [
+        {
+          "name": "Orange",
+          "family": "fruitig_fris",
+          "sweetness": 2,
+          "texture": "fris"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "300 g",
+          "size_grams": 300,
+          "servings": 30,
+          "price_eur": 27.99,
+          "source": "brief",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "diet-shake",
+      "name": "Diet Shake",
+      "category": "Maaltijdvervanger",
+      "tagline": "Vervangt een maaltijd als je wilt afvallen",
+      "beginner_info": "Een shake die een maaltijd vervangt. Je neemt 2 scheppen (40 g) met 200 ml melk. Alleen bedoeld als je wilt afvallen.",
+      "short_bullets": [
+        "Vervangt een maaltijd",
+        "2 scheppen (40 g) met 200 ml melk",
+        "Pot van 480 g"
+      ],
+      "description": "Diet Shake is een maaltijdvervanger van XXL Nutrition. Vervang er niet meer dan 1 à 2 maaltijden per dag mee.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [
+        "melk"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/diet-shake.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/catalogsearch/result/?q=Diet+Shake",
+      "flavor_count_total": null,
+      "needs_check": true,
+      "check_notes": [
+        "Aantal smaken onbekend: brief zegt 7, een XXL-listing 21",
+        "Prijs komt van een verkooppartner",
+        "Formaat 1200 g niet opgenomen (prijs onbekend)",
+        "Eiwit per portie onbekend"
+      ],
+      "flavors": [
+        {
+          "name": "Chocolade",
+          "family": "chocolade",
+          "sweetness": 2,
+          "texture": "romig"
+        },
+        {
+          "name": "Chocolade-Hazelnoot",
+          "family": "chocolade",
+          "sweetness": 3,
+          "texture": "romig"
+        },
+        {
+          "name": "Cookies & Cream",
+          "family": "koek",
+          "sweetness": 3,
+          "texture": "romig"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "480 g",
+          "size_grams": 480,
+          "servings": 12,
+          "price_eur": 23.99,
+          "source": "partner",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "delicious-protein-wafer",
+      "name": "Delicious Protein Wafer",
+      "category": "Eiwitsnack",
+      "tagline": "Eiwitrijke wafel voor onderweg",
+      "beginner_info": "Een knapperige wafel met extra eiwit. Handig als je veel onderweg bent en geen shake kunt maken.",
+      "short_bullets": [
+        "Makkelijk mee te nemen",
+        "Doos met 12 wafels van 40 g",
+        "2 smaken"
+      ],
+      "description": "Delicious Protein Wafer is een eiwitrijke wafel van XXL Nutrition. Een handig tussendoortje als je onderweg bent.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [
+        "melk"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/delicious-protein-wafer.webp",
+      "xxl_url": "https://xxlnutrition.com/en/delicious-protein-wafer",
+      "flavor_count_total": 2,
+      "needs_check": true,
+      "check_notes": [
+        "Eiwit per wafel onbekend",
+        "Allergenen (gluten, soja?) onbekend",
+        "Prijs XXL €17,99, brief noemt €24,99"
+      ],
+      "flavors": [
+        {
+          "name": "Chocolade",
+          "family": "chocolade",
+          "sweetness": 3,
+          "texture": "romig"
+        },
+        {
+          "name": "Cookies & Cream",
+          "family": "koek",
+          "sweetness": 3,
+          "texture": "romig"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "12 × 40 g",
+          "size_grams": 480,
+          "servings": 12,
+          "price_eur": 17.99,
+          "source": "xxl"
+        }
+      ]
+    },
+    {
+      "id": "vitamine-d3",
+      "name": "Vitamine D3 3000IU",
+      "category": "Vitamines & mineralen",
+      "tagline": "Vitamine D, vooral in de winter",
+      "beginner_info": "Vitamine D3 in een softgel. Veel mensen krijgen in de winter weinig zonlicht; dan is een supplement een optie.",
+      "short_bullets": [
+        "3000 IU per softgel",
+        "60 softgels",
+        "Zonder smaak"
+      ],
+      "description": "Vitamine D3 3000IU van XXL Nutrition. Neem niet meer dan de aanbevolen dagelijkse hoeveelheid op de verpakking.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [],
+      "allergens_complete": false,
+      "image_url": "/images/products/vitamine-d3.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/catalogsearch/result/?q=Vitamine+D3",
+      "flavor_count_total": null,
+      "needs_check": true,
+      "check_notes": [
+        "Prijs komt van een verkooppartner",
+        "Allergenen controleren"
+      ],
+      "flavors": [
+        {
+          "name": null,
+          "family": "neutraal",
+          "sweetness": 1,
+          "texture": "fris"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "60 softgels",
+          "size_grams": null,
+          "servings": 60,
+          "price_eur": 9.0,
+          "source": "partner",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "cal-mag",
+      "name": "Cal & Mag",
+      "category": "Vitamines & mineralen",
+      "tagline": "Calcium en magnesium",
+      "beginner_info": "Een supplement met de mineralen calcium en magnesium.",
+      "short_bullets": [
+        "Calcium en magnesium",
+        "Zonder smaak"
+      ],
+      "description": "Cal & Mag van XXL Nutrition bevat calcium en magnesium.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [],
+      "allergens_complete": false,
+      "image_url": "/images/products/cal-mag.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/catalogsearch/result/?q=Cal+Mag",
+      "flavor_count_total": null,
+      "needs_check": true,
+      "check_notes": [
+        "Prijs, formaat en dosering onbekend: tijdelijk de vanaf-prijs voor vitamines uit de brief",
+        "Allergenen controleren"
+      ],
+      "flavors": [
+        {
+          "name": null,
+          "family": "neutraal",
+          "sweetness": 1,
+          "texture": "fris"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "Formaat onbekend",
+          "size_grams": null,
+          "servings": null,
+          "price_eur": 9.99,
+          "source": "brief",
+          "needs_check": true
+        }
+      ]
+    },
+    {
+      "id": "omega-3-ultra-pure",
+      "name": "Omega 3 Ultra Pure",
+      "category": "Vitamines & mineralen",
+      "tagline": "Visolie met omega 3",
+      "beginner_info": "Visolie-capsules met omega 3-vetzuren. Een optie als je weinig vette vis eet.",
+      "short_bullets": [
+        "1000 mg per softgel",
+        "100 softgels",
+        "Zonder smaak"
+      ],
+      "description": "Omega 3 Ultra Pure van XXL Nutrition: softgels met visolie.",
+      "labels": [],
+      "badge": null,
+      "rating": null,
+      "review_count": null,
+      "protein_per_serving": null,
+      "allergens": [
+        "vis"
+      ],
+      "allergens_complete": false,
+      "image_url": "/images/products/omega-3-ultra-pure.webp",
+      "xxl_url": "https://xxlnutrition.com/nl/catalogsearch/result/?q=Omega+3+Ultra+Pure",
+      "flavor_count_total": null,
+      "needs_check": true,
+      "check_notes": [
+        "Dosering per dag onbekend: 1 softgel per portie aangenomen"
+      ],
+      "flavors": [
+        {
+          "name": null,
+          "family": "neutraal",
+          "sweetness": 1,
+          "texture": "fris"
+        }
+      ],
+      "sizes": [
+        {
+          "label": "100 softgels",
+          "size_grams": null,
+          "servings": 100,
+          "price_eur": 13.99,
+          "source": "xxl"
+        }
+      ]
+    }
+  ]
+}
