@@ -8,15 +8,19 @@ import { Onboarding } from './pages/Onboarding';
 import { ProductDetail } from './pages/ProductDetail';
 import { Home, Orders, Profile } from './pages/Tabs';
 import { Welcome } from './pages/Welcome';
+import { ProfileQuestions } from './pages/ProfileQuestions';
+import { ProfileProvider } from './profile/ProfileContext';
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+      <ProfileProvider>
       <CatalogStateProvider>
         <AppShell>
           <Routes>
             <Route path="/" element={<Welcome />} />
+            <Route path="/onboarding/2/:q?" element={<ProfileQuestions />} />
             <Route path="/onboarding/:step" element={<Onboarding />} />
             <Route path="/inloggen" element={<SignIn />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -32,6 +36,7 @@ export default function App() {
           </Routes>
         </AppShell>
       </CatalogStateProvider>
+      </ProfileProvider>
       </AuthProvider>
     </BrowserRouter>
   );

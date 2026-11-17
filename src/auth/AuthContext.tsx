@@ -1,9 +1,10 @@
-import { createClient } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { createDemoAuth } from './demoAuth';
 import { createSupabaseAuth } from './supabaseAuth';
 import type { AppUser, AuthService } from './types';
+import { supabase } from '../lib/supabase';
+import { clearDemoProfile } from '../profile/profileService';
 
 /**
  * Kiest de inlogmethode:
@@ -11,10 +12,9 @@ import type { AppUser, AuthService } from './types';
  * - anders → demo-modus (alleen in deze browser)
  */
 function createAuthService(): AuthService {
-  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-  const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
-  if (url && key) return createSupabaseAuth(createClient(url, key));
-  return createDemoAuth(window.localStorage);
+  if (supabase) return createSupabaseAuth(supabase);
+  // Demo: bij account verwijderen ook het profiel wissen (in Supabase doet "on delete cascade" dat).
+  return createDemoAuth(window.localStorage, undefined, (userId) => clearDemoProfile(window.localStorage, userId));
 }
 
 interface AuthState {

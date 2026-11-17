@@ -26,7 +26,9 @@
 | Inloggen (stap 3) | Contract `AuthService` in `src/auth/types.ts`, gebruikt via `useAuth()`. Supabase-modus als `VITE_SUPABASE_URL` en `VITE_SUPABASE_ANON_KEY` in `.env.local` staan, anders demo-modus (alleen naam en e-mail in localStorage, wachtwoord nooit opgeslagen). Setup: `docs/supabase-setup.md` |
 | Database | SQL in `supabase/migrations/` (handmatig draaien in de SQL Editor). RLS aan op elke tabel. Nieuwe tabellen krijgen `user_id ... references auth.users on delete cascade`, zodat "account verwijderen" alles wist |
 | Toegang | Ontdek en productdetail zonder account. Home, Bestellingen, Profiel en onboarding stap 2–4 alleen met account (`RequireAuth`) |
-| Leeftijd | `users.is_adult` bestaat al, maar wordt pas in bouwstap 4 gevraagd ("Ik ben 18 jaar of ouder") |
+| Leeftijd | Vraag 1 van onboarding stap 2 ("Ben je 18 jaar of ouder?"), opgeslagen in `users.is_adult` |
+| Profielvragen (stap 4) | Config in `src/profile/questions.ts` (codes Engels, labels NL). Opslag via `ProfileService` (`src/profile/profileService.ts`; Supabase: `profiles` + `users.is_adult`, demo: localStorage) en `useProfile()`. Route `/onboarding/2/:q`, één vraag per scherm; één antwoord = opslaan + automatisch door; voeding is meerkeuze met "Geen" (= `diet: []`). Niet verder springen dan de eerste onbeantwoorde vraag. Smaaktest pas als het profiel compleet is |
+| Supabase-migraties | Na elke nieuwe migratie moet de gebruiker die handmatig draaien in de SQL Editor (zie `docs/supabase-setup.md`) |
 | Wachtwoord vergeten | Nog niet gebouwd (niet in de brief). Kandidaat voor bouwstap 8 |
 
 ## Huisstijl
@@ -54,7 +56,7 @@ Dit hoort niets op te leveren.
 - [x] Bouwstap 1: projectopzet, navigatie en lege schermen
 - [x] Bouwstap 2: huisstijl-tokens, catalogus met seeddata, filters, zoeken, sorteren en productdetail
 - [x] Bouwstap 3: account aanmaken, inloggen, uitloggen, account verwijderen, privacyverklaring. *Supabase-modus alleen getest met een nagebootste client; nog testen met een echt project.*
-- [ ] Bouwstap 4: onboarding, profielvragen opslaan
+- [x] Bouwstap 4: leeftijdsvraag + 8 profielvragen, opslaan, verder waar je gebleven was, overzicht in Profiel. *Supabase-opslag getest met een nagebootste client.*
 - [ ] Bouwstap 5: smaakvragenlijst + smaakprofiel
 - [ ] Bouwstap 6: aanbevelingsalgoritme + aanbevelingsscherm
 - [ ] Bouwstap 7: gesimuleerde checkout + bestellingen

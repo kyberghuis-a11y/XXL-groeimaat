@@ -1,11 +1,13 @@
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import { useProfile } from '../profile/ProfileContext';
+import { isProfileComplete } from '../profile/questions';
 import { SignUpForm } from './Account';
 import { ComingSoon } from '../components/Layout';
 import { BackIcon } from '../components/Icons';
 import { DISCLAIMER } from '../lib/format';
 
-const STEPS = [
+export const STEPS = [
   {
     title: 'Welkom & account',
     intro: 'Maak een account aan. Zo bewaren we je antwoorden en je advies.',
@@ -13,7 +15,7 @@ const STEPS = [
   },
   {
     title: 'Over jou',
-    intro: '8 korte vragen over je sport, hoe vaak je traint, je doel, je dag, je voeding en je budget.',
+    intro: 'Korte vragen over je sport, je doel, je dag, je voeding en je budget.',
     buildStep: 'bouwstap 4',
   },
   {
@@ -28,13 +30,16 @@ const STEPS = [
   },
 ] as const;
 
-export function ProgressBar({ step, total }: { step: number; total: number }) {
-  const pct = Math.round((step / total) * 100);
+/** Voortgang over de hele onboarding. `sub` = vraag x van y binnen een stap. */
+export function ProgressBar({ step, total, sub }: { step: number; total: number; sub?: { current: number; total: number } }) {
+  const done = sub ? step - 1 + sub.current / sub.total : step;
+  const pct = Math.round((done / total) * 100);
   return (
     <div>
       <div className="mb-1 flex justify-between text-xs font-bold uppercase">
         <span>
           Stap {step} van {total}
+          {sub && ` · Vraag ${sub.current} van ${sub.total}`}
         </span>
         <span>{pct}%</span>
       </div>
@@ -56,11 +61,14 @@ export function Onboarding() {
   const { step: param } = useParams();
   const step = Number(param);
   const { user, loading } = useAuth();
+  const profile = useProfile();
   const navigate = useNavigate();
   const location = useLocation();
   if (!Number.isInteger(step) || step < 1 || step > STEPS.length) return <Navigate to="/onboarding/1" replace />;
   // Stap 2 t/m 4 alleen met een account.
   if (step > 1 && !loading && !user) return <Navigate to="/inloggen" replace state={{ from: location.pathname }} />;
+  // Smaaktest en smaakprofiel pas na de profielvragen.
+  if (step >= 3 && user && !profile.loading && !isProfileComplete(profile.answers)) return <Navigate to="/onboarding/2" replace />;
 
   const current = STEPS[step - 1];
   const isLast = step === STEPS.length;

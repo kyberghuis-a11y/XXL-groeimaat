@@ -13,7 +13,11 @@ export interface KeyValueStorage {
   removeItem(key: string): void;
 }
 
-export function createDemoAuth(storage: KeyValueStorage, now: () => Date = () => new Date()): AuthService {
+export function createDemoAuth(
+  storage: KeyValueStorage,
+  now: () => Date = () => new Date(),
+  onDelete?: (userId: string) => void,
+): AuthService {
   const listeners = new Set<(u: AppUser | null) => void>();
 
   const read = <T>(key: string, fallback: T): T => {
@@ -74,6 +78,7 @@ export function createDemoAuth(storage: KeyValueStorage, now: () => Date = () =>
       const user = current();
       if (!user) return;
       saveUsers(users().filter((u) => u.id !== user.id));
+      onDelete?.(user.id);
       setSession(null);
     },
   };
