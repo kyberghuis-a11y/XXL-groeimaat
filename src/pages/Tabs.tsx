@@ -5,29 +5,20 @@ import { useAuth } from '../auth/AuthContext';
 import { AccountSection } from './Account';
 import { useProfile } from '../profile/ProfileContext';
 import { QUESTIONS, answerLabel, firstUnanswered } from '../profile/questions';
-import { CONCEPT_LABEL, DISCLAIMER } from '../lib/format';
+import { CONCEPT_LABEL, DISCLAIMER, FLAVOR_FAMILY_LABELS } from '../lib/format';
+import { firstOpenQuestion } from '../lib/questionFlow';
+import { TASTE_QUESTIONS } from '../taste/questions';
+import { useTaste } from '../taste/TasteContext';
+import { personaTitle } from '../taste/tasteProfile';
+import { startAdvice, useFamilySuggestions } from './TasteScreens';
 
 export function Home() {
   const { user } = useAuth();
-  const { answers, loading } = useProfile();
-  const next = firstUnanswered(answers);
+  const { loading } = useProfile();
   return (
     <div className="space-y-4 p-4">
       <PageTitle>{user?.name ? `Hoi ${user.name}` : 'Jouw advies'}</PageTitle>
-      {!loading && next !== null && (
-        <section className="rounded-lg bg-xxl-black p-5 text-xxl-white">
-          <h2 className="text-base font-extrabold uppercase">Maak je profiel af</h2>
-          <p className="mt-1 text-sm text-xxl-white/80">
-            Nog {QUESTIONS.length - next + 1} korte {QUESTIONS.length - next + 1 === 1 ? 'vraag' : 'vragen'}. Daarna kunnen we je advies geven.
-          </p>
-          <Link
-            to={`/onboarding/2/${next}`}
-            className="mt-4 flex min-h-12 items-center justify-center rounded-md bg-xxl-red text-sm font-extrabold uppercase"
-          >
-            Verder met de vragen
-          </Link>
-        </section>
-      )}
+      {!loading && <OnboardingCard />}
       <ComingSoon title="Top 3 per categorie" step="bouwstap 6">
         <p className="mt-2 text-sm text-xxl-black/70">
           Hier zie je straks per categorie de 3 XXL-producten die het best bij je passen, met prijs per portie en de uitleg
@@ -42,6 +33,87 @@ export function Home() {
       </Link>
       <p className="text-xs leading-relaxed text-xxl-black/60">{DISCLAIMER}</p>
     </div>
+  );
+}
+
+function CallToAction({ title, text, to, button }: { title: string; text: string; to: string; button: string }) {
+  return (
+    <section className="rounded-lg bg-xxl-black p-5 text-xxl-white">
+      <h2 className="text-base font-extrabold uppercase">{title}</h2>
+      <p className="mt-1 text-sm text-xxl-white/80">{text}</p>
+      <Link to={to} className="mt-4 flex min-h-12 items-center justify-center rounded-md bg-xxl-red text-sm font-extrabold uppercase">
+        {button}
+      </Link>
+    </section>
+  );
+}
+
+const vragen = (n: number) => `${n} korte ${n === 1 ? 'vraag' : 'vragen'}`;
+
+/** Home: wat is de volgende stap in de onboarding? Of, als alles klaar is, je smaakprofiel. */
+function OnboardingCard() {
+  const { answers } = useProfile();
+  const taste = useTaste();
+  const suggestions = useFamilySuggestions(taste.profile);
+  if (taste.loading) return null;
+
+  const nextProfile = firstUnanswered(answers);
+  if (nextProfile !== null)
+    return (
+      <CallToAction
+        title="Maak je profiel af"
+        text={`Nog ${vragen(QUESTIONS.length - nextProfile + 1)}. Daarna kunnen we je advies geven.`}
+        to={`/onboarding/2/${nextProfile}`}
+        button="Verder met de vragen"
+      />
+    );
+  const nextTaste = firstOpenQuestion(TASTE_QUESTIONS, taste.answers as unknown as Record<string, unknown>);
+  if (nextTaste !== null || !taste.profile || !suggestions)
+    return (
+      <CallToAction
+        title="Doe de smaaktest"
+        text={`Nog ${vragen(TASTE_QUESTIONS.length - (nextTaste ?? 1) + 1)} over wat je lekker vindt. Zo kiezen we de smaak die bij je past.`}
+        to={`/onboarding/3/${nextTaste ?? 1}`}
+        button={nextTaste === 1 ? 'Start de smaaktest' : 'Verder met de smaaktest'}
+      />
+    );
+  const advice = startAdvice(taste.profile, suggestions);
+  return (
+    <section className="rounded-lg bg-xxl-white p-5" aria-labelledby="persona-title">
+      <p className="text-xs font-extrabold tracking-wider text-xxl-red uppercase">Jouw smaakprofiel</p>
+      <h2 id="persona-title" className="mt-1 text-lg leading-tight font-black">
+        {personaTitle(taste.profile)}
+      </h2>
+      {advice && <p className="mt-1 text-sm">Begin met {advice}.</p>}
+      <Link to="/onboarding/4" className="mt-3 inline-flex min-h-11 items-center text-sm font-bold underline underline-offset-4">
+        Bekijk je smaakprofiel
+      </Link>
+    </section>
+  );
+}
+
+/** Profiel: korte samenvatting van het smaakprofiel. */
+function MyTaste() {
+  const taste = useTaste();
+  if (taste.loading) return null;
+  return (
+    <section className="rounded-lg bg-xxl-white p-5" aria-labelledby="taste-title">
+      <h2 id="taste-title" className="text-base font-extrabold uppercase">
+        Mijn smaakprofiel
+      </h2>
+      {taste.profile ? (
+        <>
+          <p className="mt-2 font-bold">{personaTitle(taste.profile)}</p>
+          <p className="mt-1 text-sm">Top 3: {taste.profile.top_families.map((f) => FLAVOR_FAMILY_LABELS[f]).join(', ')}</p>
+          <Link to="/onboarding/4" className="mt-2 inline-flex min-h-11 items-center text-sm font-bold underline underline-offset-4">
+            Bekijk je smaakprofiel
+          </Link>
+          <p className="text-xs text-xxl-black/60">De smaaktest opnieuw doen komt in een volgende stap (bouwstap 8).</p>
+        </>
+      ) : (
+        <p className="mt-2 text-sm text-xxl-black/70">Je hebt de smaaktest nog niet gedaan.</p>
+      )}
+    </section>
   );
 }
 
@@ -116,7 +188,7 @@ export function Profile() {
     <div className="space-y-4 p-4">
       <PageTitle>Profiel</PageTitle>
       <MyAnswers />
-      <ComingSoon title="Smaaktest opnieuw doen" step="bouwstap 8" />
+      <MyTaste />
       <AccountSection />
 
       <footer className="space-y-4 rounded-lg bg-xxl-black p-5 text-sm text-xxl-white">

@@ -28,6 +28,9 @@
 | Toegang | Ontdek en productdetail zonder account. Home, Bestellingen, Profiel en onboarding stap 2–4 alleen met account (`RequireAuth`) |
 | Leeftijd | Vraag 1 van onboarding stap 2 ("Ben je 18 jaar of ouder?"), opgeslagen in `users.is_adult` |
 | Profielvragen (stap 4) | Config in `src/profile/questions.ts` (codes Engels, labels NL). Opslag via `ProfileService` (`src/profile/profileService.ts`; Supabase: `profiles` + `users.is_adult`, demo: localStorage) en `useProfile()`. Route `/onboarding/2/:q`, één vraag per scherm; één antwoord = opslaan + automatisch door; voeding is meerkeuze met "Geen" (= `diet: []`). Niet verder springen dan de eerste onbeantwoorde vraag. Smaaktest pas als het profiel compleet is |
+| Smaaktest (stap 5) | Vragen in `src/taste/questions.ts`, berekening in `src/taste/tasteProfile.ts` volgens de tabel "Effect op profiel" uit de brief; score per familie = min(10, punten), uitgesloten families = 0. Top 3 = alleen families met punten; bij gelijke score eerst chocolade, vanille, koek (veiligste startkeuze). Opslag in `taste_profiles` (antwoorden + berekend profiel). Gedeeld vraagscherm: `src/components/QuestionFlow.tsx` + pure logica in `src/lib/questionFlow.ts` |
+| Interpretaties smaaktest | *Niet letterlijk in de brief, ter controle:* "Speculaas of karamel" = twee opties (beide koek); fruit-snack +2 op fruitig zoet én fris; water +2 fruitig fris; kwark/havermout +2 vanille en koek; melk en plantaardige melk geven geen bonus; "kunstmatig zoet" sluit smaken met zoetheid 3 uit; "banaan" sluit alle smaken met banaan in de naam uit; neutraal krijgt nergens punten |
+| Harde regels | `src/recommend/rules.ts` (vegan, lactosevrij, cafeïne alleen 18+). Gebruikt door de smaaksuggesties en straks door de aanbevelingen (stap 6) |
 | Supabase-migraties | Na elke nieuwe migratie moet de gebruiker die handmatig draaien in de SQL Editor (zie `docs/supabase-setup.md`) |
 | Wachtwoord vergeten | Nog niet gebouwd (niet in de brief). Kandidaat voor bouwstap 8 |
 
@@ -57,7 +60,7 @@ Dit hoort niets op te leveren.
 - [x] Bouwstap 2: huisstijl-tokens, catalogus met seeddata, filters, zoeken, sorteren en productdetail
 - [x] Bouwstap 3: account aanmaken, inloggen, uitloggen, account verwijderen, privacyverklaring. *Supabase-modus alleen getest met een nagebootste client; nog testen met een echt project.*
 - [x] Bouwstap 4: leeftijdsvraag + 8 profielvragen, opslaan, verder waar je gebleven was, overzicht in Profiel. *Supabase-opslag getest met een nagebootste client.*
-- [ ] Bouwstap 5: smaakvragenlijst + smaakprofiel
+- [x] Bouwstap 5: 7 smaakvragen, berekening smaakprofiel, scherm "Jouw smaakprofiel" met concrete XXL-smaken en beginnerstips. *Supabase-opslag getest met een nagebootste client.*
 - [ ] Bouwstap 6: aanbevelingsalgoritme + aanbevelingsscherm
 - [ ] Bouwstap 7: gesimuleerde checkout + bestellingen
 - [ ] Bouwstap 8: profiel bewerken, herberekenen, afwerking, testen op mobiel

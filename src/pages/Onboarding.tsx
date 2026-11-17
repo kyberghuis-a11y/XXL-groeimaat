@@ -1,7 +1,5 @@
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
-import { useProfile } from '../profile/ProfileContext';
-import { isProfileComplete } from '../profile/questions';
 import { SignUpForm } from './Account';
 import { ComingSoon } from '../components/Layout';
 import { BackIcon } from '../components/Icons';
@@ -61,14 +59,12 @@ export function Onboarding() {
   const { step: param } = useParams();
   const step = Number(param);
   const { user, loading } = useAuth();
-  const profile = useProfile();
   const navigate = useNavigate();
   const location = useLocation();
   if (!Number.isInteger(step) || step < 1 || step > STEPS.length) return <Navigate to="/onboarding/1" replace />;
   // Stap 2 t/m 4 alleen met een account.
   if (step > 1 && !loading && !user) return <Navigate to="/inloggen" replace state={{ from: location.pathname }} />;
-  // Smaaktest en smaakprofiel pas na de profielvragen.
-  if (step >= 3 && user && !profile.loading && !isProfileComplete(profile.answers)) return <Navigate to="/onboarding/2" replace />;
+  // Let op: /onboarding/2, /3 en /4 hebben eigen routes (ProfileQuestions, TasteScreens).
 
   const current = STEPS[step - 1];
   const isLast = step === STEPS.length;

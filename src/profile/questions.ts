@@ -13,24 +13,23 @@ import {
   type ProfileAnswers,
 } from './types';
 
-export interface Option<V = string> {
+import { NONE, toggleMulti, type FlowQuestion } from '../lib/questionFlow';
+
+export { NONE };
+
+interface Option<V = string> {
   value: V;
   label: string;
 }
 
-export interface Question {
+export interface Question extends FlowQuestion {
   key: AnswerKey;
-  topic: string; // kort onderwerp, bijv. voor het overzicht in Profiel
-  title: string;
-  help?: string;
-  multi?: boolean; // meerdere antwoorden mogelijk (alleen voeding)
   options: Option<string | boolean>[];
 }
 
 const opts = <V extends string>(values: readonly V[], labels: Record<V, string>): Option<V>[] =>
   values.map((value) => ({ value, label: labels[value] }));
 
-export const NONE = 'none' as const; // "Geen" bij voeding: wist de andere keuzes
 
 export const QUESTIONS: Question[] = [
   {
@@ -148,10 +147,8 @@ export function isProfileComplete(answers: ProfileAnswers): boolean {
 
 /** Voeding: "Geen" sluit de rest uit, en een dieet kiezen haalt "Geen" weg. */
 export function toggleDiet(current: Diet[] | null, value: Diet | typeof NONE, noneSelected: boolean): { diet: Diet[]; none: boolean } {
-  if (value === NONE) return { diet: [], none: !noneSelected };
-  const list = current ?? [];
-  const diet = list.includes(value) ? list.filter((d) => d !== value) : [...list, value];
-  return { diet, none: false };
+  const t = toggleMulti(current ?? [], value, noneSelected);
+  return { diet: t.values, none: t.none };
 }
 
 /** Label van een antwoord, voor het overzicht. */

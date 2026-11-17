@@ -5,6 +5,7 @@ import { createSupabaseAuth } from './supabaseAuth';
 import type { AppUser, AuthService } from './types';
 import { supabase } from '../lib/supabase';
 import { clearDemoProfile } from '../profile/profileService';
+import { clearDemoTaste } from '../taste/tasteService';
 
 /**
  * Kiest de inlogmethode:
@@ -14,7 +15,10 @@ import { clearDemoProfile } from '../profile/profileService';
 function createAuthService(): AuthService {
   if (supabase) return createSupabaseAuth(supabase);
   // Demo: bij account verwijderen ook het profiel wissen (in Supabase doet "on delete cascade" dat).
-  return createDemoAuth(window.localStorage, undefined, (userId) => clearDemoProfile(window.localStorage, userId));
+  return createDemoAuth(window.localStorage, undefined, (userId) => {
+    clearDemoProfile(window.localStorage, userId);
+    clearDemoTaste(window.localStorage, userId);
+  });
 }
 
 interface AuthState {

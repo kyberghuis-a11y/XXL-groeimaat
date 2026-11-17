@@ -10,17 +10,22 @@ import { Home, Orders, Profile } from './pages/Tabs';
 import { Welcome } from './pages/Welcome';
 import { ProfileQuestions } from './pages/ProfileQuestions';
 import { ProfileProvider } from './profile/ProfileContext';
+import { TasteQuestions, TasteResult } from './pages/TasteScreens';
+import { TasteProvider } from './taste/TasteContext';
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
       <ProfileProvider>
+      <TasteProvider>
       <CatalogStateProvider>
         <AppShell>
           <Routes>
             <Route path="/" element={<Welcome />} />
             <Route path="/onboarding/2/:q?" element={<ProfileQuestions />} />
+            <Route path="/onboarding/3/:q?" element={<TasteQuestions />} />
+            <Route path="/onboarding/4" element={<TasteResult />} />
             <Route path="/onboarding/:step" element={<Onboarding />} />
             <Route path="/inloggen" element={<SignIn />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -36,6 +41,7 @@ export default function App() {
           </Routes>
         </AppShell>
       </CatalogStateProvider>
+      </TasteProvider>
       </ProfileProvider>
       </AuthProvider>
     </BrowserRouter>

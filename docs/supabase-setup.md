@@ -20,6 +20,7 @@ Dit maakt de tabel `users` aan, met de beveiliging "iedereen ziet alleen zichzel
 
 4. Doe hetzelfde voor **elk volgend bestand** in `supabase/migrations/`, in volgorde van het nummer:
    - `0002_profiles.sql` (bouwstap 4): de tabel `profiles` voor de antwoorden op de profielvragen
+   - `0003_taste_profiles.sql` (bouwstap 5): de tabel `taste_profiles` voor de smaaktest en je smaakprofiel
 
    Een bestand opnieuw draaien kan geen kwaad.
 
@@ -44,6 +45,7 @@ Supabase stuurt standaard een bevestigingsmail bij registratie. De app kan met a
 1. Maak een account aan in de app.
 2. Kijk in Supabase bij **Table Editor > users**. Daar staat nu een rij met je naam en e-mail.
 3. Beantwoord de profielvragen. In **Table Editor > profiles** komt een rij met je antwoorden, en in `users` staat `is_adult` ingevuld.
-4. Verwijder het account in de app via Profiel > Account verwijderen. De rijen in `users` en `profiles` zijn daarna weg, ook bij **Authentication > Users**.
+4. Doe de smaaktest. In **Table Editor > taste_profiles** komt een rij met je antwoorden en scores.
+5. Verwijder het account in de app via Profiel > Account verwijderen. De rijen in `users`, `profiles` en `taste_profiles` zijn daarna weg, ook bij **Authentication > Users**.
 
 Lukt een stap niet? Stuur Claude een screenshot van de foutmelding. **Plak nooit je sleutels in de chat.**
